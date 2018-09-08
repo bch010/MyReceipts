@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bignerdranch.android.criminalintent">
-
-    <uses-feature android:name="android.hardware.camera"
-        android:required="false"/>
+    package="au.edu.usc.myreceipts.android.myreceipts">
 
     <application
         android:allowBackup="true"
@@ -12,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".CrimeListActivity">
+        <activity android:name=".MyReceiptsListActivity">
 
             <intent-filter>
 
@@ -25,8 +22,8 @@
         </activity>
 
         <activity
-            android:name=".CrimePagerActivity"
-            android:parentActivityName=".CrimeListActivity">
+            android:name=".MyReceiptsPagerActivity"
+            android:parentActivityName=".MyReceiptsListActivity">
         </activity>
 
 
@@ -34,8 +31,3 @@
     </application>
 
 </manifest>
-
-
-
-
-

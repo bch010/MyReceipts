@@ -1,52 +1,52 @@
 <resources>
-    <string name="app_name">CriminalIntent</string>
-    <string name="crime_title_hint">Enter a title for the crime.</string>
-    <string name="crime_title_label">Title</string>
-    <string name="crime_details_label">Details</string>
+    <string name="app_name">MyReceipts</string>
+    <string name="myReceipts_title_hint">Enter a title for the myReceipts.</string>
+    <string name="myReceipts_title_label">Title</string>
+    <string name="myReceipts_details_label">Details</string>
     <string name="crime_solved_label">Solved</string>
 
-    <string name="subtitle_format">%1$d crimes</string>
+    <string name="subtitle_format">%1$d Receipts</string>
 
 
 
     <!-- Dialogs -->
-    <string name="dialog_time_title">Select time of crime</string>
-    <string name="dialog_date_title">Select crime date</string>
-    <string name="dialog_image_title">Image of Crime</string>
+    <string name="dialog_time_title">Select time of receipt</string>
+    <string name="dialog_date_title">Select receipt date</string>
+    <string name="dialog_image_title">Image of receipt</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
-    <string name="crime_suspect_text">Choose Suspect</string>
-    <string name="crime_report_text">Send Crime Report</string>
+    <string name="myReceipts_suspect_text">Choose Suspect</string>
+    <string name="myReceipts_report_text">Send Receipt Report</string>
 
-    <!-- Crime Report -->
+    <!-- MyReceipts Report -->
     <string name="crime_report">%1$s!
-        The crime was discovered on %2$s at %3$s. %4$s, and %5$s
+        The myReceipts was discovered on %2$s at %3$s. %4$s, and %5$s
     </string>
     <string name="crime_report_solved">The case is solved</string>
     <string name="crime_report_unsolved">The case is not solved</string>
-    <string name="crime_report_no_suspect">there is no suspect.</string>
-    <string name="crime_report_suspect">the suspect is %s.</string>
-    <string name="crime_report_subject">CriminalIntent Crime Report</string>
-    <string name="send_report">Send crime report via</string>
+    <string name="myReceipts_report_no_suspect">there is no suspect.</string>
+    <string name="myReceipts_report_suspect">the suspect is %s.</string>
+    <string name="myReceipts_report_subject">MyReceipt receipt Report</string>
+    <string name="send_report">Send receipts report via</string>
 
     <!-- Toolbar -->
-    <string name="new_crime">New Crime</string>
-    <string name="delete_crime">Delete Crime</string>
+    <string name="new_myReceipts">New Receipt</string>
+    <string name="delete_myReceipts">Delete Receipt</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
 
     <plurals name="subtitle_plural">
-        <item quantity="one">%1$s crime</item>
-        <item quantity="other">%1$s crimes</item>
+        <item quantity="one">%1$s myReceipts</item>
+        <item quantity="other">%1$s myReceipts</item>
     </plurals>
 
     <!-- Toast messages -->
-    <string name="toast_delete_crime">Crime has been deleted</string>
+    <string name="toast_delete_myReceipts">Receipt has been deleted</string>
 
     <!-- Empty List view -->
-    <string name="empty_view_text_view">There are no crimes...yet</string>
-    <string name="empty_view_add_button">create new crime</string>
-    <string name="crime_report_call">Call Suspect</string>
+    <string name="empty_view_text_view">There are no myReceipts...yet</string>
+    <string name="empty_view_add_button">create new myReceipts</string>
+    <string name="myReceipts_report_call">Call Suspect</string>
     <string name="toast_no_suspect">Please choose a suspect</string>
 
 </resources>
