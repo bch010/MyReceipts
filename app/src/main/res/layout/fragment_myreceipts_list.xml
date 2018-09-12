@@ -26,6 +26,10 @@
             android:text="@string/empty_view_text_view"
             android:textSize="20sp"/>
 
+
+
+
+
         <Button
             android:id="@+id/empty_view_add_button"
             android:layout_width="wrap_content"
@@ -33,6 +37,17 @@
             android:layout_below="@id/empty_view_text_view"
             android:layout_centerInParent="true"
             android:text="@string/empty_view_add_button"/>
+
+        <TextView
+            android:id="@+id/help_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="30dp"
+            android:textSize="22sp"
+            android:text="This is a popup window."/>
+        
+        
 
     </RelativeLayout>
 </RelativeLayout>

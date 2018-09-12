@@ -1,5 +1,6 @@
 package au.edu.usc.myreceipts.android.myreceipts;
 
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,19 +30,22 @@ public class MyReceiptsListFragment extends Fragment {
     private RecyclerView mReceiptsRecyclerView;
     private MyReceiptsAdapter mAdapter;
     private boolean mSubtitleVisible;
+
     private Callbacks mCallBacks;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true); //  state that the fragment has an “options menu.”
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_myreceipts_list, menu);
+//        MenuItem help = menu.findItem(R.id.help_myReceipts);
 
         MenuItem subtitle = menu.findItem(R.id.show_subtitle);
         if (mSubtitleVisible) {
@@ -56,11 +59,15 @@ public class MyReceiptsListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) { // when a tool bar item is selected
         switch (item.getItemId()) {
             case R.id.new_myReceipts:
-                MyReceipts myReceipts = new MyReceipts();
-                MyReceiptsObjects.get(getContext()).addMyReceipts(myReceipts);
-                updateUI();
-                mCallBacks.onMyReceiptsSelected(myReceipts);
+                addAReceipt();
                 return true;
+            case R.id.help_myReceipts:
+
+                Toast.makeText(getActivity(), "To add a receipt click 'New'. " +
+                        "                            Click a receipt to edit the details ", Toast.LENGTH_LONG).show();
+
+                return true;
+
             case R.id.show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
                 getActivity().invalidateOptionsMenu();
@@ -69,6 +76,17 @@ public class MyReceiptsListFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    /**
+     * add single receipt method
+     */
+    private void addAReceipt() {
+        MyReceipts receipt = new MyReceipts();
+        MyReceiptsObjects .get(getActivity()).addMyReceipts(receipt);
+        updateUI();
+        mCallBacks.onMyReceiptsSelected(receipt);
     }
 
     @Nullable
@@ -109,7 +127,7 @@ public class MyReceiptsListFragment extends Fragment {
             throw new ClassCastException(context.getClass().getSimpleName() +
                     " must implement MyReceiptsFragment.Callbacks");
         }
-        //test
+
     }
 
     @Override
@@ -137,6 +155,7 @@ public class MyReceiptsListFragment extends Fragment {
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
+        private TextView mShopNameView;
         private MyReceipts mMyReceipts;
         private ImageView mSolvedImageView;
 
@@ -145,6 +164,7 @@ public class MyReceiptsListFragment extends Fragment {
 
             mTitleTextView = itemView.findViewById(R.id.myReceipts_title);
             mDateTextView = itemView.findViewById(R.id.myReceipts_date);
+            mShopNameView = itemView.findViewById(R.id.myReceipts_shopname);
             mSolvedImageView = itemView.findViewById(R.id.crime_solved);
 
             itemView.setOnClickListener(this);
@@ -157,6 +177,7 @@ public class MyReceiptsListFragment extends Fragment {
             mDateTextView.setText(myReceipts.getDate().toString());
             String formatDate = DateFormat.format("EEEE, MMM dd, yyyy", myReceipts.getDate()).toString();
             mDateTextView.setText(formatDate);
+            mShopNameView.setText(myReceipts.getShopName());
             mSolvedImageView.setVisibility(myReceipts.isSolved() ? View.VISIBLE : View.GONE);
 
         }
@@ -164,7 +185,6 @@ public class MyReceiptsListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.d(TAG, " Date button clicked: ");
-
 
             mCallBacks.onMyReceiptsSelected(mMyReceipts);
         }
@@ -217,4 +237,6 @@ public class MyReceiptsListFragment extends Fragment {
     public interface Callbacks {
         void onMyReceiptsSelected(MyReceipts myReceipts);
     }
+
+
 }

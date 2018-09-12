@@ -1,5 +1,8 @@
 package au.edu.usc.myreceipts.android.myreceipts;
 
+
+
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +41,7 @@ public class MyReceiptsFragment extends Fragment {
     // request codes
     private static final int REQUEST_DATE = 0;
 
+
     public static final int REQUEST_CONTACT = 5;
 
     private static final String TAG = "MyReceiptsFragment";
@@ -47,6 +51,7 @@ public class MyReceiptsFragment extends Fragment {
 
     private EditText mTitleField;
     private Button mDateButton;
+    private EditText mShopNameField;
     private CheckBox mSolvedCheckBox;
     private Callbacks mCallbacks;
 
@@ -97,7 +102,8 @@ public class MyReceiptsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_myreceipts, container, false);
 
         setHasOptionsMenu(true);
-        mTitleField = v.findViewById(R.id.myReceipts_title);
+
+        mTitleField = v.findViewById(R.id.myReceipts_title); //list_item_receipt.xml
         mTitleField.setText(mMyReceipts.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -116,6 +122,27 @@ public class MyReceiptsFragment extends Fragment {
                 // Also intentionally left blank
             }
         });
+
+        mShopNameField = v.findViewById(R.id.myReceipts_shopname);
+        mShopNameField.setText(mMyReceipts.getShopName());
+        mShopNameField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // This space intentionally left blank
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mMyReceipts.setTitle(charSequence.toString());
+                updateMyReceipts();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Also intentionally left blank
+            }
+        });
+
 
         // Setup date button
         mDateButton = v.findViewById(R.id.myReceipts_date);
@@ -230,4 +257,6 @@ public class MyReceiptsFragment extends Fragment {
         MyReceiptsObjects.get(getActivity()).updateMyReceipts(mMyReceipts);
         mCallbacks.onMyReceiptsUpdated(mMyReceipts);
     }
+
+
 }

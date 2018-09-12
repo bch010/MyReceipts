@@ -4,9 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/new_myReceipts"
-        android:icon="@drawable/ic_menu_add"
+
         android:title="@string/new_myReceipts"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/help_myReceipts"
+
+        android:title="@string/help_myReceipts"
+        app:showAsAction="always"/>
 
     <item
     android:id="@+id/show_subtitle"

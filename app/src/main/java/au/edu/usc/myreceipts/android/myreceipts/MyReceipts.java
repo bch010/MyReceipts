@@ -10,6 +10,7 @@ public class MyReceipts {
     private UUID mId;
     private String mTitle;
     private Date mDate;
+    private String mShopName;
     private boolean mSolved;
 
 
@@ -25,22 +26,37 @@ public class MyReceipts {
     }
 
     public UUID getId() {
+
         return mId;
     }
 
     public String getTitle() {
+
         return mTitle;
     }
 
     public void setTitle(String title) {
+
         mTitle = title;
     }
 
+    public String getShopName() {
+
+        return mShopName;
+    }
+
+    public void setShopName(String shopName) {
+
+        mShopName = shopName;
+    }
+
     public Date getDate() {
+
         return mDate;
     }
 
     public void setDate(Date date) {
+
         mDate = date;
     }
 
@@ -49,6 +65,7 @@ public class MyReceipts {
     }
 
     public void setSolved(boolean solved) {
+
         mSolved = solved;
     }
 

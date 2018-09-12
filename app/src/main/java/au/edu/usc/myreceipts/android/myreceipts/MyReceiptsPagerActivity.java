@@ -1,7 +1,5 @@
 package au.edu.usc.myreceipts.android.myreceipts;
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,14 +17,14 @@ import java.util.UUID;
 public class MyReceiptsPagerActivity extends AppCompatActivity
         implements MyReceiptsFragment.Callbacks {
 
-    private static final String EXTRA_CRIME_ID = "usc.ICT311.android.MyReceipts.crime_id";
+    private static final String EXTRA_MYRECEIPT_ID = "edu.usc.android.MyReceipts.myreceipt_id";
 
     private ViewPager mViewPager;
     private List<MyReceipts> mMyReceipts;
 
     public static Intent newIntent(Context packageContext, UUID myReceiptsId) {
         Intent intent = new Intent(packageContext, MyReceiptsPagerActivity.class);
-        intent.putExtra(EXTRA_CRIME_ID, myReceiptsId);
+        intent.putExtra(EXTRA_MYRECEIPT_ID, myReceiptsId);
         return intent;
     }
 
@@ -35,7 +33,7 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myreceipts_pager);
 
-        UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+        UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_MYRECEIPT_ID);
 
         mViewPager = findViewById(R.id.activity_myreceipts_pager_view_pager);
 

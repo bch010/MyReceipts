@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">MyReceipts</string>
-    <string name="myReceipts_title_hint">Enter a title for the myReceipts.</string>
-    <string name="myReceipts_title_label">Title</string>
-    <string name="myReceipts_details_label">Details</string>
+    <string name="myReceipts_title_hint">Enter a title for the Receipt</string>
+    <string name="myReceipts_title_label">Receipt Title</string>
+    <string name="myReceipts_details_label">Receipt Details</string>
+    <string name="myReceipts_shopname_hint">Shop Name for the receipt</string>
     <string name="crime_solved_label">Solved</string>
 
     <string name="subtitle_format">%1$d Receipts</string>
@@ -30,10 +31,11 @@
     <string name="send_report">Send receipts report via</string>
 
     <!-- Toolbar -->
-    <string name="new_myReceipts">New Receipt</string>
+    <string name="new_myReceipts">New</string>
+    <string name="help_myReceipts">Help</string>
     <string name="delete_myReceipts">Delete Receipt</string>
-    <string name="show_subtitle">Show Subtitle</string>
-    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="show_subtitle">Show # of Receipts</string>
+    <string name="hide_subtitle">Hide # of Receipts</string>
 
     <plurals name="subtitle_plural">
         <item quantity="one">%1$s myReceipts</item>
