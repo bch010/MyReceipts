@@ -133,7 +133,7 @@ public class MyReceiptsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mMyReceipts.setTitle(charSequence.toString());
+                mMyReceipts.setShopName(charSequence.toString());
                 updateMyReceipts();
             }
 
