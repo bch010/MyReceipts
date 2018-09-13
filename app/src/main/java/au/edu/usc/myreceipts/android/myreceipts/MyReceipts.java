@@ -12,6 +12,7 @@ public class MyReceipts {
     private Date mDate;
     private String mShopName;
     private boolean mSolved;
+    private String mReceipt;
 
 
     public MyReceipts() {

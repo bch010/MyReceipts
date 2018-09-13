@@ -5,9 +5,7 @@
     <string name="myReceipts_details_label">Receipt Details</string>
     <string name="myReceipts_shopname_hint">Shop Name for the receipt</string>
     <string name="crime_solved_label">Solved</string>
-
     <string name="subtitle_format">%1$d Receipts</string>
-
 
 
     <!-- Dialogs -->
