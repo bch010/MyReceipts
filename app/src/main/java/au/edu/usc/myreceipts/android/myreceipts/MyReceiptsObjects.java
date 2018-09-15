@@ -116,6 +116,7 @@ public class MyReceiptsObjects {
     }
 
     public File getPhotoFile(MyReceipts myReceipts) {
+
         File filesDir = mContext.getFilesDir();
         return new File(filesDir, myReceipts.getPhotoFilename());
     }

@@ -36,6 +36,7 @@ public class MyReceiptsListActivity extends SingleFragmentActivity
     public void onMyReceiptsUpdated(MyReceipts myReceipts) {
         MyReceiptsListFragment listFragment = (MyReceiptsListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        assert listFragment != null;
         listFragment.updateUI();
     }
 }

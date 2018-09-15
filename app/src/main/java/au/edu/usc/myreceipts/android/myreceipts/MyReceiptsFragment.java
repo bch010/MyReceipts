@@ -11,7 +11,9 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.hardware.Camera;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -70,6 +72,7 @@ public class MyReceiptsFragment extends Fragment {
     private CheckBox mSolvedCheckBox;
     private Callbacks mCallbacks;
     private Button mReportButton;
+    private ImageButton mPhotoButton;
     private ImageView mPhotoView;
     private Button myReceiptButton;
     private File mPhotoFile;
@@ -99,6 +102,7 @@ public class MyReceiptsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID myReceiptsId = (UUID) getArguments().getSerializable(ARG_MYRECEIPTS_ID);
+
         mMyReceipts = MyReceiptsObjects.get(getActivity()).getMyReceipt(myReceiptsId);
         mPhotoFile = MyReceiptsObjects.get(getActivity()).getPhotoFile(mMyReceipts);
     }
@@ -237,65 +241,71 @@ public class MyReceiptsFragment extends Fragment {
             myReceiptButton.setText(mMyReceipts.getRecepit());
         }
 
-
-
-
         // Disable the choose receipt button to prevent crash when no contacts in app are available
         PackageManager packageManager = Objects.requireNonNull(getActivity()).getPackageManager();
         if (packageManager.resolveActivity(pickContact, PackageManager.MATCH_DEFAULT_ONLY) == null) {
             myReceiptButton.setEnabled(false);
         }
 
+
+
         // Setup photo taking functions
-        ImageButton mPhotoButton = v.findViewById(R.id.myReceipts_camera); // view_camera_and_title.xml
+        mPhotoView =  v.findViewById(R.id.myReceipts_photo);
+        mPhotoButton = v.findViewById(R.id.myReceipts_camera); //
 
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(packageManager) != null;
-//        mPhotoButton.setEnabled(canTakePhoto);
+        mPhotoButton.setEnabled (canTakePhoto);
 
-//        mPhotoButton.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Uri uri = FileProvider.getUriForFile(getActivity(),
-//                        "au.edu.usc.myreceipts.android.myreceipts.fileprovider",
-//                        mPhotoFile);
-//                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-//
-//                List<ResolveInfo> cameraActivities = getActivity().getPackageManager().queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
-//
-//                for (ResolveInfo activity : cameraActivities) {
-//                    getActivity().grantUriPermission(activity.activityInfo.packageName,
-//                            uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//                }
-//                startActivityForResult(captureImage, REQUEST_PHOTO);
-//            }
-//        });
+        // If a camera is not available, disable the camera functionality
+        if (canTakePhoto) {
+            Uri uri = Uri.fromFile(mPhotoFile);
+            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        } 
 
-        mPhotoView =  v.findViewById(R.id.myReceipts_photo);
+        mPhotoButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Uri uri = FileProvider.getUriForFile(getActivity(),
+                        "au.edu.usc.myreceipts.android.myreceipts.fileprovider",
+                        mPhotoFile);
+                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+                List<ResolveInfo> cameraActivities = getActivity().getPackageManager().queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
+
+                for (ResolveInfo activity : cameraActivities) {
+                    getActivity().grantUriPermission(activity.activityInfo.packageName,
+                            uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
+                startActivityForResult(captureImage, REQUEST_PHOTO);
+            }
+        });
+
+
 
         // On image click, open zoomed image dialog
-//        mPhotoView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FragmentManager fragmentManager = getFragmentManager();
-//                ImageDisplayFragment fragment = ImageDisplayFragment.newInstance(mPhotoFile);
-//                assert fragmentManager != null;
-//                fragment.show(fragmentManager, DIALOG_IMAGE);
-//            }
-//        });
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                ImageDisplayFragment fragment = ImageDisplayFragment.newInstance(mPhotoFile);
+                assert fragmentManager != null;
+                fragment.show(fragmentManager, DIALOG_IMAGE);
+            }
+        });
 
-//        mPhotoTreeObserver = mPhotoView.getViewTreeObserver();
-//        mPhotoTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                mPhotoView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                mPhotoViewSize = new Point();
-//                mPhotoViewSize.set(mPhotoView.getWidth(), mPhotoView.getHeight());
-//
-//                updatePhotoView();
-//            }
-//        });
+        mPhotoTreeObserver = mPhotoView.getViewTreeObserver();
+        mPhotoTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mPhotoView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mPhotoViewSize = new Point();
+                mPhotoViewSize.set(mPhotoView.getWidth(), mPhotoView.getHeight());
+
+                updatePhotoView();
+            }
+        });
 
         return v;
     }
@@ -376,8 +386,7 @@ public class MyReceiptsFragment extends Fragment {
                 c.close();
             }
         } else if (requestCode == REQUEST_PHOTO) {
-            Uri uri = FileProvider.getUriForFile(getActivity(),
-                    "au.edu.usc.myreceipts.android.myreceipts.fileprovider", mPhotoFile);
+            Uri uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", mPhotoFile);
             // Remove temporary write access to file from camera
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
