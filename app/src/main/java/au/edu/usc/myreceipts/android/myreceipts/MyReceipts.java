@@ -13,6 +13,7 @@ public class MyReceipts {
     private String mShopName;
     private boolean mSolved;
     private String mReceipt;
+    private String mComments;
 
 
     public MyReceipts() {
@@ -62,6 +63,7 @@ public class MyReceipts {
     }
 
     public boolean isSolved() {
+
         return mSolved;
     }
 
@@ -70,5 +72,30 @@ public class MyReceipts {
         mSolved = solved;
     }
 
+
+    public String getRecepit() {
+
+        return mReceipt;
+    }
+
+    public void setReceipt(String receipt) {
+
+    mReceipt = receipt;
+    }
+
+    public String getComments() {
+
+        return mComments;
+    }
+
+    public void setComments(String comments) {
+
+        mComments = comments;
+    }
+
+    public String getPhotoFilename() {
+
+        return "IMG_" + getId().toString() + ".jpg";
+    }
 
 }

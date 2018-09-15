@@ -6,13 +6,19 @@ package au.edu.usc.myreceipts.android.myreceipts;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
@@ -22,13 +28,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+
+
 
 public class MyReceiptsFragment extends Fragment {
 
@@ -40,20 +55,26 @@ public class MyReceiptsFragment extends Fragment {
 
     // request codes
     private static final int REQUEST_DATE = 0;
-
-
     public static final int REQUEST_CONTACT = 5;
+    private static final int REQUEST_PHOTO= 2;
+    private static final String DIALOG_IMAGE = "DialogImage";
 
     private static final String TAG = "MyReceiptsFragment";
 
     // Widgets
     private MyReceipts mMyReceipts;
-
     private EditText mTitleField;
     private Button mDateButton;
     private EditText mShopNameField;
+    private EditText mCommentsField;
     private CheckBox mSolvedCheckBox;
     private Callbacks mCallbacks;
+    private Button mReportButton;
+    private ImageView mPhotoView;
+    private Button myReceiptButton;
+    private File mPhotoFile;
+    private ViewTreeObserver mPhotoTreeObserver;
+    private Point mPhotoViewSize;
 
     public interface Callbacks {
         void onMyReceiptsUpdated(MyReceipts myReceipts);
@@ -79,7 +100,7 @@ public class MyReceiptsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID myReceiptsId = (UUID) getArguments().getSerializable(ARG_MYRECEIPTS_ID);
         mMyReceipts = MyReceiptsObjects.get(getActivity()).getMyReceipt(myReceiptsId);
-
+        mPhotoFile = MyReceiptsObjects.get(getActivity()).getPhotoFile(mMyReceipts);
     }
 
     @Override
@@ -100,7 +121,6 @@ public class MyReceiptsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_myreceipts, container, false);
-
         setHasOptionsMenu(true);
 
         mTitleField = v.findViewById(R.id.myReceipts_title); //list_item_receipt.xml
@@ -143,6 +163,25 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
+        mCommentsField = v.findViewById(R.id.myReceipts_comments);
+        mCommentsField.setText(mMyReceipts.getComments());
+        mCommentsField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // This space intentionally left blank
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mMyReceipts.setComments(charSequence.toString());
+                updateMyReceipts();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Also intentionally left blank
+            }
+        });
 
         // Setup date button
         mDateButton = v.findViewById(R.id.myReceipts_date);
@@ -171,7 +210,132 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
+
+        mReportButton = v.findViewById(R.id.myReceipts_report);
+        mReportButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getReceiptReport());
+                i.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.myReceipts_report_subject));
+                i = Intent.createChooser(i, getString(R.string.send_report));
+                startActivity(i);
+            }
+        });
+
+        final Intent pickContact = new Intent(Intent.ACTION_PICK,
+                ContactsContract.Contacts.CONTENT_URI);
+        myReceiptButton = v.findViewById(R.id.myReceipts_receipt);
+        myReceiptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(pickContact, REQUEST_CONTACT);
+            }
+        });
+
+        if (mMyReceipts.getRecepit() != null) {
+            myReceiptButton.setText(mMyReceipts.getRecepit());
+        }
+
+
+
+
+        // Disable the choose receipt button to prevent crash when no contacts in app are available
+        PackageManager packageManager = Objects.requireNonNull(getActivity()).getPackageManager();
+        if (packageManager.resolveActivity(pickContact, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+            myReceiptButton.setEnabled(false);
+        }
+
+        // Setup photo taking functions
+        ImageButton mPhotoButton = v.findViewById(R.id.myReceipts_camera); // view_camera_and_title.xml
+
+        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(packageManager) != null;
+//        mPhotoButton.setEnabled(canTakePhoto);
+
+//        mPhotoButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Uri uri = FileProvider.getUriForFile(getActivity(),
+//                        "au.edu.usc.myreceipts.android.myreceipts.fileprovider",
+//                        mPhotoFile);
+//                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+//
+//                List<ResolveInfo> cameraActivities = getActivity().getPackageManager().queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
+//
+//                for (ResolveInfo activity : cameraActivities) {
+//                    getActivity().grantUriPermission(activity.activityInfo.packageName,
+//                            uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//                }
+//                startActivityForResult(captureImage, REQUEST_PHOTO);
+//            }
+//        });
+
+        mPhotoView =  v.findViewById(R.id.myReceipts_photo);
+
+        // On image click, open zoomed image dialog
+//        mPhotoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentManager fragmentManager = getFragmentManager();
+//                ImageDisplayFragment fragment = ImageDisplayFragment.newInstance(mPhotoFile);
+//                assert fragmentManager != null;
+//                fragment.show(fragmentManager, DIALOG_IMAGE);
+//            }
+//        });
+
+//        mPhotoTreeObserver = mPhotoView.getViewTreeObserver();
+//        mPhotoTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                mPhotoView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                mPhotoViewSize = new Point();
+//                mPhotoViewSize.set(mPhotoView.getWidth(), mPhotoView.getHeight());
+//
+//                updatePhotoView();
+//            }
+//        });
+
         return v;
+    }
+
+    // For sending a formatted email/sms report
+    private String getReceiptReport() {
+        String solvedString = null;
+        if (mMyReceipts.isSolved()) {
+            solvedString = getString(R.string.myReceipts_shopname);
+        } else {
+            solvedString = getString(R.string.myReceipts_shopname);
+        }
+        String dateFormat = "EEE, MMM dd";
+        String dateString = DateFormat.format(dateFormat,
+                mMyReceipts.getDate()).toString();
+        String receipt = mMyReceipts.getRecepit();
+        if (receipt == null) {
+            receipt = getString(R.string.myReceipts_report_no_receipt);
+        } else {
+            receipt = getString(R.string.myReceipts_report_receipt, receipt);
+        }
+
+        // return the receipt report
+
+        String report = getString(R.string.receipt_report,
+                mMyReceipts.getTitle(), dateString, solvedString, receipt);
+        return report;
+    }
+
+    private void updatePhotoView() {
+        if (mPhotoFile == null || !mPhotoFile.exists()) {
+            mPhotoView.setImageDrawable(null);
+            mPhotoView.setClickable(false);
+            mPhotoView.setContentDescription(getString(R.string.myReceipts_photo_no_image_description));
+        } else {
+            mPhotoView.setClickable(true);
+            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), mPhotoViewSize.x, mPhotoViewSize.y);
+            mPhotoView.setImageBitmap(bitmap);
+            mPhotoView.setContentDescription(getString(R.string.myReceipts_photo_image_description));
+        }
     }
 
     @Override
@@ -199,8 +363,7 @@ public class MyReceiptsFragment extends Fragment {
 
             // Perform your query - the contactUri is like a "where"
             // clause here
-            Cursor c = getActivity().getContentResolver()
-                    .query(contactUri, queryFields, null, null, null);
+            Cursor c = getActivity().getContentResolver().query(contactUri, queryFields, null, null, null);
 
             try {
                 // Double-check that results were actually received
@@ -212,6 +375,22 @@ public class MyReceiptsFragment extends Fragment {
             } finally {
                 c.close();
             }
+        } else if (requestCode == REQUEST_PHOTO) {
+            Uri uri = FileProvider.getUriForFile(getActivity(),
+                    "au.edu.usc.myreceipts.android.myreceipts.fileprovider", mPhotoFile);
+            // Remove temporary write access to file from camera
+            getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            mPhotoView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Announce to screenreader
+                    mPhotoView.announceForAccessibility(getString(R.string.photo_announcement));
+                }
+            }, 500);
+
+            updateMyReceipts();
+            updatePhotoView();
         }
     }
 
@@ -244,7 +423,7 @@ public class MyReceiptsFragment extends Fragment {
                 UUID myReceiptId = (UUID) getArguments().getSerializable(ARG_MYRECEIPTS_ID);
                 MyReceiptsObjects myReceiptsObjects = MyReceiptsObjects.get(getActivity());
                 mMyReceipts = myReceiptsObjects.getMyReceipt(myReceiptId);
-//                myReceiptsObjects.deleteMyReceipts(mMyReceipts);
+                myReceiptsObjects.deleteMyReceipts(mMyReceipts);
                 getActivity().finish();
                 deleteMyReceipts();
                 return true;
@@ -257,6 +436,5 @@ public class MyReceiptsFragment extends Fragment {
         MyReceiptsObjects.get(getActivity()).updateMyReceipts(mMyReceipts);
         mCallbacks.onMyReceiptsUpdated(mMyReceipts);
     }
-
 
 }

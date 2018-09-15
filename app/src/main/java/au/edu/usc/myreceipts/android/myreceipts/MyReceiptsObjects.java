@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -114,13 +115,20 @@ public class MyReceiptsObjects {
         }
     }
 
+    public File getPhotoFile(MyReceipts myReceipts) {
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, myReceipts.getPhotoFilename());
+    }
+
     private static ContentValues getContentValues(MyReceipts myReceipts) {
         ContentValues values = new ContentValues();
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.UUID, myReceipts.getId().toString());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.TITLE, myReceipts.getTitle());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.DATE, myReceipts.getDate().getTime());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.SHOPNAME, myReceipts.getShopName());
+        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS, myReceipts.getComments());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.SOLVED, myReceipts.isSolved() ? 1 : 0);
+        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT, myReceipts.getRecepit());
 
         return values;
     }

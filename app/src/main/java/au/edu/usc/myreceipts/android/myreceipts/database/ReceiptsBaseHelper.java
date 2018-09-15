@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ReceiptsBaseHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "myReceiptsBase2.db";
+    private static final int VERSION = 5;
+    private static final String DATABASE_NAME = "myReceiptsBase.db";
 
     public ReceiptsBaseHelper(Context context) {
 
@@ -18,17 +18,20 @@ public class ReceiptsBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        db.execSQL("create table " + ReceiptsDbSchema.ReceiptsTable.NAME + "(" +
-                " _id integer primary key autoincrement, " +
-                ReceiptsDbSchema.ReceiptsTable.Cols.UUID + ", " +
-                ReceiptsDbSchema.ReceiptsTable.Cols.TITLE + ", " +
-                ReceiptsDbSchema.ReceiptsTable.Cols.DATE + ", " +
-                ReceiptsDbSchema.ReceiptsTable.Cols.SHOPNAME + ", " +
-               ReceiptsDbSchema.ReceiptsTable.Cols.SOLVED +
+        db.execSQL("CREATE TABLE " + ReceiptsDbSchema.ReceiptsTable.NAME + "(" +
+                " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.UUID + " INTEGER, " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.TITLE + " TEXT, " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.DATE + " INTEGER, " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.SHOPNAME + " TEXT, " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS + " TEXT, " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.SOLVED + " INTEGER, " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT + " TEXT " +
+//                ReceiptsDbSchema.ReceiptsTable.Cols.SUSPECT_ID + " INTEGER" +
                 ")"
         );
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -207,8 +207,8 @@ public class MyReceiptsListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(MyReceiptsHolder holder, int position) {
-            MyReceipts myReceipts = mMyReceipts.get(position);
 
+            MyReceipts myReceipts = mMyReceipts.get(position);
             holder.bind(myReceipts);
         }
 

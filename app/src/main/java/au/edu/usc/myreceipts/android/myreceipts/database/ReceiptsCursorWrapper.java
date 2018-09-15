@@ -23,14 +23,18 @@ public class ReceiptsCursorWrapper extends CursorWrapper {
         String title = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.TITLE));
         long date = getLong(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.DATE));
         String shopname = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.SHOPNAME));
+        String comments = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS));
         int isSolved = getInt(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.SOLVED));
+        String receipt = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT));
 
 
         MyReceipts myReceipts = new MyReceipts(UUID.fromString(uuidString));
         myReceipts.setTitle(title);
         myReceipts.setDate(new Date(date));
         myReceipts.setShopName(shopname);
+        myReceipts.setComments(comments);
         myReceipts.setSolved(isSolved != 0);
+        myReceipts.setReceipt(receipt);
         return myReceipts;
     }
 

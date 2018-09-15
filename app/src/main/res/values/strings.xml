@@ -4,8 +4,16 @@
     <string name="myReceipts_title_label">Receipt Title</string>
     <string name="myReceipts_details_label">Receipt Details</string>
     <string name="myReceipts_shopname_hint">Shop Name for the receipt</string>
+    <string name="myReceipts_comments_hint">Comments</string>
     <string name="crime_solved_label">Solved</string>
     <string name="subtitle_format">%1$d Receipts</string>
+
+
+    <!-- Accessibility -->
+    <string name="myReceipts_photo_button_description">Take photo of the receipt</string>
+    <string name="myReceipts_photo_no_image_description"> Receipt photo (not set)</string>
+    <string name="myReceipts_photo_image_description"> Receipt photo (set) </string>
+    <string name="photo_announcement">A new receipt photo has been set.</string>
 
 
     <!-- Dialogs -->
@@ -14,18 +22,16 @@
     <string name="dialog_image_title">Image of receipt</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
-    <string name="myReceipts_suspect_text">Choose Suspect</string>
+    <string name="myReceipts_receipt_text">Choose a Receipt</string>
     <string name="myReceipts_report_text">Send Receipt Report</string>
 
     <!-- MyReceipts Report -->
-    <string name="crime_report">%1$s!
-        The myReceipts was discovered on %2$s at %3$s. %4$s, and %5$s
-    </string>
-    <string name="crime_report_solved">The case is solved</string>
-    <string name="crime_report_unsolved">The case is not solved</string>
-    <string name="myReceipts_report_no_suspect">there is no suspect.</string>
-    <string name="myReceipts_report_suspect">the suspect is %s.</string>
-    <string name="myReceipts_report_subject">MyReceipt receipt Report</string>
+    <string name="receipt_report">%1$s! Receipt date - %2$s. %3$s, and %4$s</string>
+    <string name="crime_report_solved">nothing more to send</string>
+    <string name="myReceipts_shopname"> from </string>
+    <string name="myReceipts_report_no_receipt">nothing more to send.</string>
+    <string name="myReceipts_report_receipt">the receipt is %s.</string>
+    <string name="myReceipts_report_subject">MyReceipt "receipt" Report</string>
     <string name="send_report">Send receipts report via</string>
 
     <!-- Toolbar -->

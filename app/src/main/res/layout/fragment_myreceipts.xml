@@ -23,6 +23,12 @@
         android:layout_height="wrap_content"
         android:hint="@string/myReceipts_shopname_hint"/>
 
+    <EditText
+        android:id="@+id/myReceipts_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/myReceipts_comments_hint"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"/>
 
-
     </LinearLayout>
 
     <CheckBox
@@ -49,13 +54,20 @@
         android:text="@string/crime_solved_label"/>
 
     <Button
-        android:id="@+id/crime_report"
+        android:id="@+id/myReceipts_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/myReceipts_report_text"/>
 
+    <Button
+        android:id="@+id/myReceipts_receipt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/myReceipts_receipt_text"/>
 
 
 
