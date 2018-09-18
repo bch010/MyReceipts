@@ -31,6 +31,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -247,8 +250,6 @@ public class MyReceiptsFragment extends Fragment {
             myReceiptButton.setEnabled(false);
         }
 
-
-
         // Setup photo taking functions
         mPhotoView =  v.findViewById(R.id.myReceipts_photo);
         mPhotoButton = v.findViewById(R.id.myReceipts_camera); //
@@ -261,7 +262,7 @@ public class MyReceiptsFragment extends Fragment {
         if (canTakePhoto) {
             Uri uri = Uri.fromFile(mPhotoFile);
             captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        } 
+        }
 
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
 
@@ -281,8 +282,6 @@ public class MyReceiptsFragment extends Fragment {
                 startActivityForResult(captureImage, REQUEST_PHOTO);
             }
         });
-
-
 
         // On image click, open zoomed image dialog
         mPhotoView.setOnClickListener(new View.OnClickListener() {

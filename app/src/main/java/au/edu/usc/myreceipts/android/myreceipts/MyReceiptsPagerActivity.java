@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +20,7 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
         implements MyReceiptsFragment.Callbacks {
 
     private static final String EXTRA_MYRECEIPT_ID = "edu.usc.android.MyReceipts.myreceipt_id";
-
+    private WebView mWebView;
     private ViewPager mViewPager;
     private List<MyReceipts> mMyReceipts;
 
@@ -35,8 +37,12 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
 
         UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_MYRECEIPT_ID);
 
-        mViewPager = findViewById(R.id.activity_myreceipts_pager_view_pager);
+//        setContentView(R.layout.webview);
+//        mWebView = findViewById(R.id.myReceipts_webview);
+//        mWebView.setWebViewClient(new WebViewClient());
+//        mWebView.loadUrl("https://en.wikipedia.org/wiki/Receipt");
 
+        mViewPager = findViewById(R.id.activity_myreceipts_pager_view_pager);
         mMyReceipts = MyReceiptsObjects.get(this).getMyReceipts();
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {

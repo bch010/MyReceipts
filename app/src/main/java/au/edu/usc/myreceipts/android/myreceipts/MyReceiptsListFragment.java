@@ -2,6 +2,8 @@ package au.edu.usc.myreceipts.android.myreceipts;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,9 +18,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,19 +35,16 @@ public class MyReceiptsListFragment extends Fragment {
 
     private Callbacks mCallBacks;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true); //  state that the fragment has an “options menu.”
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_myreceipts_list, menu);
-//        MenuItem help = menu.findItem(R.id.help_myReceipts);
 
         MenuItem subtitle = menu.findItem(R.id.show_subtitle);
         if (mSubtitleVisible) {
@@ -61,12 +60,11 @@ public class MyReceiptsListFragment extends Fragment {
             case R.id.new_myReceipts:
                 addAReceipt();
                 return true;
+//
             case R.id.help_myReceipts:
-
-                Toast.makeText(getActivity(), "To add a receipt click 'New'. " +
-                        "                            Click a receipt to edit the details ", Toast.LENGTH_LONG).show();
-
-                return true;
+                Intent i = new Intent(getActivity(), MyReceiptsWebView.class);
+                startActivity(i);
+                return false;
 
             case R.id.show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
@@ -74,20 +72,21 @@ public class MyReceiptsListFragment extends Fragment {
                 updateSubtitle();
                 return true;
             default:
+
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     /**
      * add single receipt method
      */
     private void addAReceipt() {
         MyReceipts receipt = new MyReceipts();
-        MyReceiptsObjects .get(getActivity()).addMyReceipts(receipt);
+        MyReceiptsObjects.get(getActivity()).addMyReceipts(receipt);
         updateUI();
         mCallBacks.onMyReceiptsSelected(receipt);
     }
+
 
     @Nullable
     @Override
@@ -138,7 +137,7 @@ public class MyReceiptsListFragment extends Fragment {
 
     public void updateUI() {
         MyReceiptsObjects myReceiptsObjects = MyReceiptsObjects.get(getContext());
-        List<MyReceipts> myReceipts = myReceiptsObjects.getMyReceipts();
+        List <MyReceipts> myReceipts = myReceiptsObjects.getMyReceipts();
 
         if (mAdapter == null) {
             mAdapter = new MyReceiptsAdapter(myReceipts);
@@ -190,10 +189,10 @@ public class MyReceiptsListFragment extends Fragment {
         }
     }
 
-    private class MyReceiptsAdapter extends RecyclerView.Adapter<MyReceiptsHolder> {
-        private List<MyReceipts> mMyReceipts;
+    private class MyReceiptsAdapter extends RecyclerView.Adapter <MyReceiptsHolder> {
+        private List <MyReceipts> mMyReceipts;
 
-        public MyReceiptsAdapter(List<MyReceipts> myReceipts) {
+        public MyReceiptsAdapter(List <MyReceipts> myReceipts) {
 
             mMyReceipts = myReceipts;
         }
@@ -217,7 +216,7 @@ public class MyReceiptsListFragment extends Fragment {
             return mMyReceipts.size();
         }
 
-        public void setMyReceipts(List<MyReceipts> myReceipts) {
+        public void setMyReceipts(List <MyReceipts> myReceipts) {
 
 
             mMyReceipts = myReceipts;
@@ -237,6 +236,5 @@ public class MyReceiptsListFragment extends Fragment {
     public interface Callbacks {
         void onMyReceiptsSelected(MyReceipts myReceipts);
     }
-
 
 }
