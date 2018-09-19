@@ -20,7 +20,6 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
         implements MyReceiptsFragment.Callbacks {
 
     private static final String EXTRA_MYRECEIPT_ID = "edu.usc.android.MyReceipts.myreceipt_id";
-    private WebView mWebView;
     private ViewPager mViewPager;
     private List<MyReceipts> mMyReceipts;
 
@@ -35,12 +34,8 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myreceipts_pager);
 
-        UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_MYRECEIPT_ID);
+        UUID receiptId = (UUID) getIntent().getSerializableExtra(EXTRA_MYRECEIPT_ID);
 
-//        setContentView(R.layout.webview);
-//        mWebView = findViewById(R.id.myReceipts_webview);
-//        mWebView.setWebViewClient(new WebViewClient());
-//        mWebView.loadUrl("https://en.wikipedia.org/wiki/Receipt");
 
         mViewPager = findViewById(R.id.activity_myreceipts_pager_view_pager);
         mMyReceipts = MyReceiptsObjects.get(this).getMyReceipts();
@@ -61,7 +56,7 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
         });
 
         for (int i = 0; i < mMyReceipts.size(); i++) {
-            if (mMyReceipts.get(i).getId().equals(crimeId)) {
+            if (mMyReceipts.get(i).getId().equals(receiptId)) {
                 mViewPager.setCurrentItem(i);
                 break;
             }

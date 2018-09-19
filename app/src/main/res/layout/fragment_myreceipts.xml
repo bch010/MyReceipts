@@ -87,12 +87,12 @@
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/crime_solved"
+        android:id="@+id/myReceipts_sent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:text="@string/crime_solved_label"/>
+        android:text="@string/receipt_sent_label"/>
 
     <Button
         android:id="@+id/myReceipts_report"
@@ -110,6 +110,19 @@
         android:layout_marginRight="16dp"
         android:text="@string/myReceipts_receipt_text"/>
 
+    <Button
+        android:id="@+id/myReceipts_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/myReceipts_location_text"/>
+
+    <TextView
+        android:id="@+id/Receipt_GPS_Cords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Receipt GPS Cords" />
 
 
 </LinearLayout>

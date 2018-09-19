@@ -2,15 +2,14 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/new_myReceipts"
-
         android:title="@string/new_myReceipts"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/help_myReceipts"
-
         android:title="@string/help_myReceipts"
         app:showAsAction="always"/>
 
@@ -18,15 +17,5 @@
     android:id="@+id/show_subtitle"
     android:title="@string/show_subtitle"
     app:showAsAction="ifRoom"/>
-
-
-    <WebView
-        android:id="@+id/myReceipts_webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/help_myReceipts"/>
-
 
 </menu>

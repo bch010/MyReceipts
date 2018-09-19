@@ -72,7 +72,7 @@ public class MyReceiptsFragment extends Fragment {
     private Button mDateButton;
     private EditText mShopNameField;
     private EditText mCommentsField;
-    private CheckBox mSolvedCheckBox;
+    private CheckBox mReceiptSentCheckBox;
     private Callbacks mCallbacks;
     private Button mReportButton;
     private ImageButton mPhotoButton;
@@ -81,6 +81,7 @@ public class MyReceiptsFragment extends Fragment {
     private File mPhotoFile;
     private ViewTreeObserver mPhotoTreeObserver;
     private Point mPhotoViewSize;
+    private Button mLocationButton;
 
     public interface Callbacks {
         void onMyReceiptsUpdated(MyReceipts myReceipts);
@@ -207,12 +208,12 @@ public class MyReceiptsFragment extends Fragment {
         });
 
         // Setup checkbox
-        mSolvedCheckBox = v.findViewById(R.id.crime_solved);
-        mSolvedCheckBox.setChecked(mMyReceipts.isSolved());
-        mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mReceiptSentCheckBox = v.findViewById(R.id.myReceipts_sent);
+        mReceiptSentCheckBox.setChecked(mMyReceipts.isReceiptSent());
+        mReceiptSentCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mMyReceipts.setSolved(isChecked);
+                mMyReceipts.setReceiptSent(isChecked);
                 updateMyReceipts();
             }
         });
@@ -249,6 +250,16 @@ public class MyReceiptsFragment extends Fragment {
         if (packageManager.resolveActivity(pickContact, PackageManager.MATCH_DEFAULT_ONLY) == null) {
             myReceiptButton.setEnabled(false);
         }
+
+        mLocationButton = v.findViewById(R.id.myReceipts_location);
+        mLocationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Uri gmmIntentUri = Uri.parse("geo:-26.699681, 153.082589");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
 
         // Setup photo taking functions
         mPhotoView =  v.findViewById(R.id.myReceipts_photo);
@@ -311,11 +322,11 @@ public class MyReceiptsFragment extends Fragment {
 
     // For sending a formatted email/sms report
     private String getReceiptReport() {
-        String solvedString = null;
-        if (mMyReceipts.isSolved()) {
-            solvedString = getString(R.string.myReceipts_shopname);
+        String receiptsentString = null;
+        if (mMyReceipts.isReceiptSent()) {
+            receiptsentString = getString(R.string.myReceipts_shopname);
         } else {
-            solvedString = getString(R.string.myReceipts_shopname);
+            receiptsentString = getString(R.string.myReceipts_shopname);
         }
         String dateFormat = "EEE, MMM dd";
         String dateString = DateFormat.format(dateFormat,
@@ -330,7 +341,7 @@ public class MyReceiptsFragment extends Fragment {
         // return the receipt report
 
         String report = getString(R.string.receipt_report,
-                mMyReceipts.getTitle(), dateString, solvedString, receipt);
+                mMyReceipts.getTitle(), dateString, receiptsentString, receipt);
         return report;
     }
 

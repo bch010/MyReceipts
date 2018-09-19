@@ -3,7 +3,6 @@ package au.edu.usc.myreceipts.android.myreceipts;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
@@ -156,7 +154,7 @@ public class MyReceiptsListFragment extends Fragment {
         private TextView mDateTextView;
         private TextView mShopNameView;
         private MyReceipts mMyReceipts;
-        private ImageView mSolvedImageView;
+        private ImageView mReceiptImageView;
 
         public MyReceiptsHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_receipt, parent, false));
@@ -164,7 +162,7 @@ public class MyReceiptsListFragment extends Fragment {
             mTitleTextView = itemView.findViewById(R.id.myReceipts_title);
             mDateTextView = itemView.findViewById(R.id.myReceipts_date);
             mShopNameView = itemView.findViewById(R.id.myReceipts_shopname);
-            mSolvedImageView = itemView.findViewById(R.id.crime_solved);
+            mReceiptImageView = itemView.findViewById(R.id.myReceipts_sent);
 
             itemView.setOnClickListener(this);
         }
@@ -177,7 +175,7 @@ public class MyReceiptsListFragment extends Fragment {
             String formatDate = DateFormat.format("EEEE, MMM dd, yyyy", myReceipts.getDate()).toString();
             mDateTextView.setText(formatDate);
             mShopNameView.setText(myReceipts.getShopName());
-            mSolvedImageView.setVisibility(myReceipts.isSolved() ? View.VISIBLE : View.GONE);
+            mReceiptImageView.setVisibility(myReceipts.isReceiptSent() ? View.VISIBLE : View.GONE);
 
         }
 

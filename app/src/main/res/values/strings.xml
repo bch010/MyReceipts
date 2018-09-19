@@ -5,7 +5,7 @@
     <string name="myReceipts_details_label">Receipt Details</string>
     <string name="myReceipts_shopname_hint">Shop Name for the receipt</string>
     <string name="myReceipts_comments_hint">Comments</string>
-    <string name="crime_solved_label">Solved</string>
+    <string name="receipt_sent_label">Receipt Sent</string>
     <string name="subtitle_format">%1$d Receipts</string>
 
 
@@ -24,15 +24,20 @@
     <string name="cancel_button">Cancel</string>
     <string name="myReceipts_receipt_text">Choose a Receipt</string>
     <string name="myReceipts_report_text">Send Receipt Report</string>
+    <string name="myReceipts_location_text">Show in map</string>
 
     <!-- MyReceipts Report -->
     <string name="receipt_report">%1$s! Receipt date - %2$s. %3$s, and %4$s</string>
-    <string name="crime_report_solved">nothing more to send</string>
+    <string name="receipt_report_sent">nothing more to send</string>
     <string name="myReceipts_shopname"> from </string>
     <string name="myReceipts_report_no_receipt">nothing more to send.</string>
     <string name="myReceipts_report_receipt">the receipt is %s.</string>
     <string name="myReceipts_report_subject">MyReceipt "receipt" Report</string>
     <string name="send_report">Send receipts report via</string>
+
+    <!-- MyReceipts Location -->
+
+    <string name="myReceipts_report_location">The location of the receipt</string>
 
     <!-- Toolbar -->
     <string name="new_myReceipts">New</string>

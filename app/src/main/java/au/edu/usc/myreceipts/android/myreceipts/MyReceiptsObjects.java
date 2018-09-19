@@ -128,7 +128,7 @@ public class MyReceiptsObjects {
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.DATE, myReceipts.getDate().getTime());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.SHOPNAME, myReceipts.getShopName());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS, myReceipts.getComments());
-        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.SOLVED, myReceipts.isSolved() ? 1 : 0);
+        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPTSENT, myReceipts.isReceiptSent() ? 1 : 0);
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT, myReceipts.getRecepit());
 
         return values;

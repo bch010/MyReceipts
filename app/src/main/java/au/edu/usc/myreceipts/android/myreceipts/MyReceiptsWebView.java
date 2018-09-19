@@ -20,10 +20,7 @@ public class MyReceiptsWebView  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
         webView = findViewById(R.id.myReceipts_webview);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient()); // opens url
         webView.loadUrl("https://en.wikipedia.org/wiki/Receipt");
-
     }
-
-
 }

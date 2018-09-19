@@ -11,7 +11,7 @@ public class MyReceipts {
     private String mTitle;
     private Date mDate;
     private String mShopName;
-    private boolean mSolved;
+    private boolean mReceiptSent;
     private String mReceipt;
     private String mComments;
 
@@ -62,14 +62,14 @@ public class MyReceipts {
         mDate = date;
     }
 
-    public boolean isSolved() {
+    public boolean isReceiptSent() {
 
-        return mSolved;
+        return mReceiptSent;
     }
 
-    public void setSolved(boolean solved) {
+    public void setReceiptSent(boolean receiptsent) {
 
-        mSolved = solved;
+        mReceiptSent = receiptsent;
     }
 
 
