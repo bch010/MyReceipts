@@ -12,9 +12,11 @@ public class ReceiptsDbSchema {
             public static final String TITLE = "title";
             public static final String DATE = "date";
             public static final String SHOPNAME = "shopname";
-                public static final String COMMENTS = "comments";
+            public static final String COMMENTS = "comments";
             public static final String RECEIPTSENT = "receiptsent";
             public static final String RECEIPT = "receipt";
+            public static final String LATITUDE = "latitude";
+            public static final String LONGITUDE = "longitude";
         }
     }
 }

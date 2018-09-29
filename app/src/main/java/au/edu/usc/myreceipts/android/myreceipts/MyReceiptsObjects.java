@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -117,8 +118,11 @@ public class MyReceiptsObjects {
 
     public File getPhotoFile(MyReceipts myReceipts) {
 
-        File filesDir = mContext.getFilesDir();
-        return new File(filesDir, myReceipts.getPhotoFilename());
+        File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (externalFilesDir == null) {
+            return null;
+        }
+        return new File(externalFilesDir, myReceipts.getPhotoFilename());
     }
 
     private static ContentValues getContentValues(MyReceipts myReceipts) {
@@ -130,6 +134,8 @@ public class MyReceiptsObjects {
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS, myReceipts.getComments());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPTSENT, myReceipts.isReceiptSent() ? 1 : 0);
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT, myReceipts.getRecepit());
+        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.LONGITUDE, myReceipts.getLongitude());
+        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.LATITUDE, myReceipts.getLatitude());
 
         return values;
     }

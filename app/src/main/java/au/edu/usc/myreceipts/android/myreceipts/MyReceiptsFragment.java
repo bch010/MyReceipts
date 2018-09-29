@@ -11,19 +11,20 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.hardware.Camera;
+import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,16 +32,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 import java.io.File;
 import java.util.Date;
@@ -83,6 +91,11 @@ public class MyReceiptsFragment extends Fragment {
     private Point mPhotoViewSize;
     private Button mLocationButton;
 
+    private GoogleApiClient mClient;
+
+
+
+
     public interface Callbacks {
         void onMyReceiptsUpdated(MyReceipts myReceipts);
     }
@@ -109,6 +122,57 @@ public class MyReceiptsFragment extends Fragment {
 
         mMyReceipts = MyReceiptsObjects.get(getActivity()).getMyReceipt(myReceiptsId);
         mPhotoFile = MyReceiptsObjects.get(getActivity()).getPhotoFile(mMyReceipts);
+
+//        requestPermission();
+
+        mClient = new GoogleApiClient.Builder(getActivity()).addApi(LocationServices.API)
+                .build();
+        mClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected (Bundle bundle){
+                        getActivity().invalidateOptionsMenu();
+                        onConnectedLocation();
+
+                    }
+                    @Override
+                    public void onConnectionSuspended (int i){
+                    }
+                })
+                .build();
+
+    }
+
+    private void onConnectedLocation() {
+        LocationRequest request = LocationRequest.create();
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        request.setNumUpdates(1);
+        request.setInterval(0);
+
+        getActivity().getBaseContext();
+
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission
+                        .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        //send off request and listen for the Locations to come back
+        LocationServices.FusedLocationApi.requestLocationUpdates(mClient, request, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location){
+                        mMyReceipts.setLatitude(Double.toString(location.getLatitude()));
+                        mMyReceipts.setLongitude(Double.toString(location.getLongitude()));
+                        updateLocation();
+                    }
+                });
+
+    }
+    private void updateLocation() {
+        mLocationButton.setText("Latitude: " + mMyReceipts.getLatitude() + ", Longitude: " +
+                mMyReceipts.getLongitude());
     }
 
     @Override
@@ -218,7 +282,6 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
-
         mReportButton = v.findViewById(R.id.myReceipts_report);
         mReportButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -253,13 +316,24 @@ public class MyReceiptsFragment extends Fragment {
 
         mLocationButton = v.findViewById(R.id.myReceipts_location);
         mLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                Uri gmmIntentUri = Uri.parse("geo:-26.699681, 153.082589");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+                // Create a URI from an intent string. Use the result to create an Intent.
+                String uriBegin = "geo:" + mMyReceipts.getLatitude() + "," + mMyReceipts.getLongitude();
+                String query = mMyReceipts.getLatitude() + mMyReceipts.getLongitude();
+                String encodedQuery = Uri.encode(query);
+                String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
+                Uri uri = Uri.parse(uriString);
+                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+                Log.d(TAG, "onCreateView() Latitude location in database: " + mMyReceipts.getLatitude());
+                Log.d(TAG, "onCreateView() Longitude location in database: " + mMyReceipts.getLongitude());
+
+                startActivity(intent);
             }
         });
+
+
 
         // Setup photo taking functions
         mPhotoView =  v.findViewById(R.id.myReceipts_photo);
@@ -298,10 +372,10 @@ public class MyReceiptsFragment extends Fragment {
         mPhotoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getFragmentManager();
-                ImageDisplayFragment fragment = ImageDisplayFragment.newInstance(mPhotoFile);
-                assert fragmentManager != null;
-                fragment.show(fragmentManager, DIALOG_IMAGE);
+                FragmentManager fm = getFragmentManager();
+                ImageDisplayFragment ImageFragment = ImageDisplayFragment.newInstance(mPhotoFile);
+                assert fm != null;
+                ImageFragment.show(fm, DIALOG_IMAGE);
             }
         });
 
@@ -455,5 +529,9 @@ public class MyReceiptsFragment extends Fragment {
         MyReceiptsObjects.get(getActivity()).updateMyReceipts(mMyReceipts);
         mCallbacks.onMyReceiptsUpdated(mMyReceipts);
     }
+
+//    private void requestPermission(){
+//        ActivityCompat.requestPermissions((Activity) Objects.requireNonNull(getActivity()).getApplicationContext(), new String[]{ACCESS_FINE_LOCATION}, 1);
+//    }
 
 }

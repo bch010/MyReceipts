@@ -2,6 +2,8 @@ package au.edu.usc.myreceipts.android.myreceipts;
 
 
 
+import android.location.Location;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,6 +16,9 @@ public class MyReceipts {
     private boolean mReceiptSent;
     private String mReceipt;
     private String mComments;
+    private String mLatitude;
+    private String mLongitude;
+    private Location mLocation;
 
 
     public MyReceipts() {
@@ -96,6 +101,30 @@ public class MyReceipts {
     public String getPhotoFilename() {
 
         return "IMG_" + getId().toString() + ".jpg";
+    }
+
+    public Location getLocation() {
+        return mLocation;
+    }
+
+    public void setLocation(Location location) {
+        mLocation = location;
+    }
+
+    public String getLongitude() {
+        return mLongitude;
+    }
+
+    public void setLongitude(String Longitude) {
+        mLongitude = Longitude;
+    }
+
+    public String getLatitude() {
+        return mLatitude;
+    }
+
+    public void setLatitude(String Latitude) {
+        mLatitude = Latitude;
     }
 
 }

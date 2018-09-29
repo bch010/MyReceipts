@@ -26,7 +26,9 @@ public class ReceiptsBaseHelper extends SQLiteOpenHelper {
                 ReceiptsDbSchema.ReceiptsTable.Cols.SHOPNAME + " TEXT, " +
                 ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS + " TEXT, " +
                 ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPTSENT + " INTEGER, " +
-                ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT + " TEXT " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT + " TEXT, " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.LATITUDE + ", " +
+                ReceiptsDbSchema.ReceiptsTable.Cols.LONGITUDE + "" +
 //                ReceiptsDbSchema.ReceiptsTable.Cols.SUSPECT_ID + " INTEGER" +
                 ")"
         );
