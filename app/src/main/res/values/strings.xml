@@ -38,6 +38,8 @@
     <!-- MyReceipts Location -->
 
     <string name="myReceipts_report_location">The location of the receipt</string>
+    <string name="myReceipts_latitude">Lat: </string>
+    <string name="myReceipts_longitude">long: </string>
 
     <!-- Toolbar -->
     <string name="new_myReceipts">New</string>

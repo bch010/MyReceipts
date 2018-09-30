@@ -156,6 +156,7 @@ public class MyReceiptsListFragment extends Fragment {
         private MyReceipts mMyReceipts;
         private ImageView mReceiptImageView;
 
+
         public MyReceiptsHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_receipt, parent, false));
 
@@ -176,7 +177,6 @@ public class MyReceiptsListFragment extends Fragment {
             mDateTextView.setText(formatDate);
             mShopNameView.setText(myReceipts.getShopName());
             mReceiptImageView.setVisibility(myReceipts.isReceiptSent() ? View.VISIBLE : View.GONE);
-
         }
 
         @Override
