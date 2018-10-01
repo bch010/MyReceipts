@@ -64,7 +64,6 @@ public class MyReceiptsFragment extends Fragment {
     public static final int REQUEST_CONTACT = 5;
     private static final int REQUEST_PHOTO = 2;
     private static final String DIALOG_IMAGE = "DialogImage";
-
     private static final String TAG = "MyReceiptsFragment";
 
     // Widgets
@@ -384,27 +383,16 @@ public class MyReceiptsFragment extends Fragment {
 
     // For sending a formatted email/sms report
     private String getReceiptReport() {
-        String receiptsentString = null;
-        if (mMyReceipts.isReceiptSent()) {
-            receiptsentString = getString(R.string.myReceipts_shopname);
-        } else {
-            receiptsentString = getString(R.string.myReceipts_shopname);
-        }
-        String dateFormat = "EEE, MMM dd";
-        String dateString = DateFormat.format(dateFormat,
-                mMyReceipts.getDate()).toString();
-        String receipt = mMyReceipts.getRecepit();
-        if (receipt == null) {
-            receipt = getString(R.string.myReceipts_report_no_receipt);
-        } else {
-            receipt = getString(R.string.myReceipts_report_receipt, receipt);
-        }
 
-        // return the receipt report
+        String dateFormat = "EEE, MMM dd, yyyy";
+        String dateString = DateFormat.format(dateFormat, mMyReceipts.getDate()).toString();
+        String shopNameString = getString(R.string.myReceipts_report_shopname) + mMyReceipts.getShopName();
+        String commentsString = getString(R.string.myReceipts_report_comments) + mMyReceipts.getComments();
 
-        String report = getString(R.string.receipt_report,
-                mMyReceipts.getTitle(), dateString, receiptsentString, receipt);
-        return report;
+
+        /// Return the report
+        return getString(R.string.receipt_report,
+                mMyReceipts.getTitle(), dateString, shopNameString, commentsString, mMyReceipts.getPhotoFilename());
     }
 
     private void updatePhotoView() {
@@ -435,8 +423,7 @@ public class MyReceiptsFragment extends Fragment {
 
         } else if (requestCode == REQUEST_CONTACT && data != null) {
             Uri contactUri = data.getData();
-            // Specify which fields you want your query to return
-            // values for.
+            // Specify which fields you want your query to return values
             String[] queryFields = new String[]{
                     ContactsContract.Contacts.DISPLAY_NAME,
                     ContactsContract.Contacts._ID

@@ -11,9 +11,9 @@
 
     <!-- Accessibility -->
     <string name="myReceipts_photo_button_description">Take photo of the receipt</string>
-    <string name="myReceipts_photo_no_image_description"> Receipt photo (not set)</string>
-    <string name="myReceipts_photo_image_description"> Receipt photo (set) </string>
-    <string name="photo_announcement">A new receipt photo has been set.</string>
+    <string name="myReceipts_photo_no_image_description"> Receipt photo (not sent)</string>
+    <string name="myReceipts_photo_image_description"> Receipt photo (sent) </string>
+    <string name="photo_announcement">A new receipt photo has been sent.</string>
 
 
     <!-- Dialogs -->
@@ -27,12 +27,12 @@
     <string name="myReceipts_location_text">Show in map</string>
 
     <!-- MyReceipts Report -->
-    <string name="receipt_report">%1$s! Receipt date - %2$s. %3$s, and %4$s</string>
+    <string name="receipt_report">Receipts for: %1$s\n\nReceipt Date:  %2$s\n\n%3$s\n\n%4$s\n\n%5$s</string>
     <string name="receipt_report_sent">nothing more to send</string>
-    <string name="myReceipts_shopname"> from </string>
-    <string name="myReceipts_report_no_receipt">nothing more to send.</string>
+    <string name="myReceipts_report_shopname"> Shope Name:  </string>
+    <string name="myReceipts_report_comments">Comments: </string>
     <string name="myReceipts_report_receipt">the receipt is %s.</string>
-    <string name="myReceipts_report_subject">MyReceipt "receipt" Report</string>
+    <string name="myReceipts_report_subject">Receipt Report</string>
     <string name="send_report">Send receipts report via</string>
 
     <!-- MyReceipts Location -->
