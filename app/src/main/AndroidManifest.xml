@@ -37,11 +37,11 @@
         </activity>
 
         <activity
-            android:name=".MyReceiptsWebView"
+            android:name=".MyReceiptsWebViewActivity"
             android:parentActivityName=".MyReceiptsListActivity">
         </activity>
 
-        <activity android:name=".MapActivity" />
+        <activity android:name=".MyReceiptsMapActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

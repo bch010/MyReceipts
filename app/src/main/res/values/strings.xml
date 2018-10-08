@@ -8,13 +8,10 @@
     <string name="receipt_sent_label">Receipt Sent</string>
     <string name="subtitle_format">%1$d Receipts</string>
 
-
     <!-- Accessibility -->
     <string name="myReceipts_photo_button_description">Take photo of the receipt</string>
     <string name="myReceipts_photo_no_image_description"> Receipt photo (not sent)</string>
     <string name="myReceipts_photo_image_description"> Receipt photo (sent) </string>
-    <string name="photo_announcement">A new receipt photo has been sent.</string>
-
 
     <!-- Dialogs -->
     <string name="dialog_time_title">Select time of receipt</string>
@@ -28,7 +25,7 @@
 
     <!-- MyReceipts Report -->
     <string name="receipt_report">Receipts for: %1$s\n\nReceipt Date:  %2$s\n\n%3$s\n\n%4$s\n\n%5$s</string>
-    <string name="receipt_report_sent">nothing more to send</string>
+
     <string name="myReceipts_report_shopname"> Shope Name:  </string>
     <string name="myReceipts_report_comments">Comments: </string>
     <string name="myReceipts_report_receipt">the receipt is %s.</string>

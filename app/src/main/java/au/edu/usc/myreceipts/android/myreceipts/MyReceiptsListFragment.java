@@ -61,7 +61,7 @@ public class MyReceiptsListFragment extends Fragment {
                 return true;
 //
             case R.id.help_myReceipts:
-                Intent i = new Intent(getActivity(), MyReceiptsWebView.class);
+                Intent i = new Intent(getActivity(), MyReceiptsWebViewActivity.class);
                 startActivity(i);
                 return false;
 

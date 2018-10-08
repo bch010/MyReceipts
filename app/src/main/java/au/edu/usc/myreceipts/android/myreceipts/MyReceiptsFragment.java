@@ -6,14 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -65,7 +63,6 @@ public class MyReceiptsFragment extends Fragment {
 
     // request codes
     private static final int REQUEST_DATE = 0;
-    public static final int REQUEST_CONTACT = 5;
     private static final int REQUEST_PHOTO = 2;
     private static final String DIALOG_IMAGE = "DialogImage";
     private static final String TAG = "MyReceiptsFragment";
@@ -82,13 +79,13 @@ public class MyReceiptsFragment extends Fragment {
     private Button mReportButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
-    private Button myReceiptButton;
+//    private Button myReceiptButton;
     private File mPhotoFile;
     private ViewTreeObserver mPhotoTreeObserver;
     private Point mPhotoViewSize;
     private TextView mLatitudeTextView;
     private TextView mLongitudeTextView;
-    private Button mshowMapButton;
+    private Button mShowMapButton;
     private Context context = getActivity();
     private LocationManager locationManager;
     private boolean gpsServiceAvailable = false;
@@ -128,7 +125,7 @@ public class MyReceiptsFragment extends Fragment {
 
         if (gpsServiceAvailable) {
             if (gpsStatus) {
-                //mshowMapButton.setEnabled(true);
+                //mShowMapButton.setEnabled(true);
                 if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED
                         && ActivityCompat.checkSelfPermission(getActivity(),
@@ -160,7 +157,7 @@ public class MyReceiptsFragment extends Fragment {
 
                 });
             } else {
-//                    mshowMapButton.setEnabled(false);
+//                    mShowMapButton.setEnabled(false);
                 Toast.makeText(getActivity(), "Enable Location on your device", Toast.LENGTH_SHORT).show();
             }
         }
@@ -194,8 +191,8 @@ public class MyReceiptsFragment extends Fragment {
         mReceiptSentCheckBox = v.findViewById(R.id.myReceipts_sent);
         mPhotoButton = v.findViewById(R.id.myReceipts_camera); //
         mReportButton = v.findViewById(R.id.myReceipts_report);
-//        myReceiptButton = v.findViewById(R.id.myReceipts_receipt);
-        mshowMapButton = v.findViewById(R.id.myReceipts_location);
+        mPhotoView = v.findViewById(R.id.myReceipts_photo);
+        mShowMapButton = v.findViewById(R.id.myReceipts_location);
         mLatitudeTextView = v.findViewById(R.id.myReceipts_latitude);
         mLongitudeTextView = v.findViewById(R.id.myReceipts_longitude);
 
@@ -237,25 +234,21 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
-        if (!gpsStatus) mshowMapButton.setEnabled(false);
-        mshowMapButton.setOnClickListener(new View.OnClickListener() {
+        if (!gpsStatus) mShowMapButton.setEnabled(false);
+        mShowMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 float[] coords = getLocationCords();
                 if (mMyReceipts.getLocation() == null) {
                     Toast.makeText(getContext(), "The receipt doesn't have specified coordinates",
                             Toast.LENGTH_SHORT).show();
-                    mshowMapButton.setEnabled(false);
+                    mShowMapButton.setEnabled(false);
 
                 } else if (coords.length == 2) {
                     LatLng latLng = new LatLng(coords[0], coords[1]);
-                    Intent intent = MapActivity.newIntent(getActivity(), latLng);
-
+                    Intent intent = MyReceiptsMapActivity.newIntent(getActivity(), latLng);
                     startActivity(intent);
-
                 }
-
-
             }
         });
 
@@ -317,11 +310,11 @@ public class MyReceiptsFragment extends Fragment {
         });
 
        // Photos
-        mPhotoView = v.findViewById(R.id.myReceipts_photo);
 
         PackageManager packageManager = getActivity().getPackageManager();
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(packageManager) != null;
+        boolean canTakePhoto = mPhotoFile != null
+                && captureImage.resolveActivity(packageManager) != null;
         mPhotoButton.setEnabled(canTakePhoto);
 
         // / If a camera is not available, disable the camera functionality
@@ -331,7 +324,6 @@ public class MyReceiptsFragment extends Fragment {
 //        }
 
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Uri uri = FileProvider.getUriForFile(getActivity(),
@@ -417,28 +409,7 @@ public class MyReceiptsFragment extends Fragment {
 
             updateMyReceipts();
 
-        } else if (requestCode == REQUEST_CONTACT && data != null) {
-            Uri contactUri = data.getData();
-            // Specify which fields you want your query to return values
-            String[] queryFields = new String[]{
-                    ContactsContract.Contacts.DISPLAY_NAME,
-                    ContactsContract.Contacts._ID
-            };
-
-            // Perform query - the contactUri is like a "where" clause
-            Cursor c = getActivity().getContentResolver().query(contactUri, queryFields, null, null, null);
-
-            try {
-                // Are the results received
-                if (c != null && c.getCount() == 0) {
-                    return;
-                }
-
-                updateMyReceipts();
-            } finally {
-                c.close();
-            }
-        } else if (requestCode == REQUEST_PHOTO) {
+        }else if (requestCode == REQUEST_PHOTO) {
             Uri uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", mPhotoFile);
             // Remove temporary write access to file from camera
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -447,7 +418,6 @@ public class MyReceiptsFragment extends Fragment {
             updatePhotoView();
             updateLocationView();
         }
-
     }
 
     private void updateLocationView() {

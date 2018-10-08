@@ -14,8 +14,6 @@ public class MyReceipts {
     private boolean mReceiptSent;
     private String mReceipt;
     private String mComments;
-    private String mLatitude;
-    private String mLongitude;
     private String mLocation;
 
 
@@ -107,22 +105,6 @@ public class MyReceipts {
 
     public void setLocation(String location) {
         mLocation = location;
-    }
-
-    public String getLongitude() {
-        return mLongitude;
-    }
-
-    public void setLongitude(String Longitude) {
-        mLongitude = Longitude;
-    }
-
-    public String getLatitude() {
-        return mLatitude;
-    }
-
-    public void setLatitude(String Latitude) {
-        mLatitude = Latitude;
     }
 
 }

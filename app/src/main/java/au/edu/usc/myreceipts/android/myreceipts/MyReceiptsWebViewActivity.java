@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
-public class MyReceiptsWebView  extends AppCompatActivity {
+public class MyReceiptsWebViewActivity extends AppCompatActivity {
 
     private WebView webView;
 
