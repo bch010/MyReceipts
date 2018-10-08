@@ -1,7 +1,7 @@
 package au.edu.usc.myreceipts.android.myreceipts;
 
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -18,12 +19,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,16 +41,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class MyReceiptsFragment extends Fragment {
@@ -65,6 +69,7 @@ public class MyReceiptsFragment extends Fragment {
     private static final int REQUEST_PHOTO = 2;
     private static final String DIALOG_IMAGE = "DialogImage";
     private static final String TAG = "MyReceiptsFragment";
+    private static final int ERROR_DIALOG_REQUEST =  1001;
 
     // Widgets
     private MyReceipts mMyReceipts;
@@ -81,11 +86,14 @@ public class MyReceiptsFragment extends Fragment {
     private File mPhotoFile;
     private ViewTreeObserver mPhotoTreeObserver;
     private Point mPhotoViewSize;
-    private Button mLocationButton;
-    private GoogleApiClient mClient;
-    public TextView LongCoord;
-    public TextView LatCoord;
-
+    private TextView mLatitudeTextView;
+    private TextView mLongitudeTextView;
+    private Button mshowMapButton;
+    private Context context = getActivity();
+    private LocationManager locationManager;
+    private boolean gpsServiceAvailable = false;
+    private boolean gpsStatus = false;
+    public String currentLocation;
 
     public interface Callbacks {
         void onMyReceiptsUpdated(MyReceipts myReceipts);
@@ -114,51 +122,48 @@ public class MyReceiptsFragment extends Fragment {
         mMyReceipts = MyReceiptsObjects.get(getActivity()).getMyReceipt(myReceiptsId);
         mPhotoFile = MyReceiptsObjects.get(getActivity()).getPhotoFile(mMyReceipts);
 
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        boolean gpsServiceAvailable = isServicesOk();
+        gpsStatus = checkGpsStatus();
 
-        // to access google play / https://developers.google.com/android/guides/google-api-client
-        mClient = new GoogleApiClient.Builder(getActivity())
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+        if (gpsServiceAvailable) {
+            if (gpsStatus) {
+                //mshowMapButton.setEnabled(true);
+                if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getActivity(),
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
 
+                    return;
+                }
+                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
-                    public void onConnected(Bundle bundle) {
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+//                            Toast.makeText(getContext(), location.toString(), Toast.LENGTH_LONG).show();
 
-                        getActivity().invalidateOptionsMenu();
-                        onConnectedLocation();
+                            if (mMyReceipts.getLocation() == null) {
+                                currentLocation = location.getLatitude() + "," + location.getLongitude();
+                                mMyReceipts.setLocation(currentLocation);
+                                MyReceiptsObjects.get(getActivity()).updateMyReceipts(mMyReceipts);
+                                updateLocationView();
+                                // Toast.makeText(getContext(),"onSuccess "+currentLocation,Toast.LENGTH_SHORT).show();
+                            } else {
+
+                                updateLocationView();
+                            }
+                        } else
+                            Toast.makeText(getContext(), "Location is null", Toast.LENGTH_LONG).show();
                     }
 
-                    @Override
-                    public void onConnectionSuspended(int i) {
-                    }
-                })
-                .build();
-    }
-
-    private void onConnectedLocation() {
-        LocationRequest request = LocationRequest.create();
-        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        request.setNumUpdates(1);
-        request.setInterval(0);
-
-        getActivity().getBaseContext();
-
-        if (ActivityCompat.checkSelfPermission(getActivity(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission
-                        .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        //send off a request and listen for the locations to come back
-        LocationServices.FusedLocationApi.requestLocationUpdates(mClient, request, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                mMyReceipts.setLatitude(Double.toString(location.getLatitude()));
-                mMyReceipts.setLongitude(Double.toString(location.getLongitude()));
-                LongCoord.setText(mMyReceipts.getLongitude());
-                LatCoord.setText(mMyReceipts.getLatitude());
+                });
+            } else {
+//                    mshowMapButton.setEnabled(false);
+                Toast.makeText(getActivity(), "Enable Location on your device", Toast.LENGTH_SHORT).show();
             }
-        });
+        }
     }
 
     @Override
@@ -181,7 +186,19 @@ public class MyReceiptsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_myreceipts, container, false);
         setHasOptionsMenu(true);
 
+        // Setup button's
         mTitleField = v.findViewById(R.id.myReceipts_title); //list_item_receipt.xml
+        mShopNameField = v.findViewById(R.id.myReceipts_shopname);
+        mCommentsField = v.findViewById(R.id.myReceipts_comments);
+        mDateButton = v.findViewById(R.id.myReceipts_date);
+        mReceiptSentCheckBox = v.findViewById(R.id.myReceipts_sent);
+        mPhotoButton = v.findViewById(R.id.myReceipts_camera); //
+        mReportButton = v.findViewById(R.id.myReceipts_report);
+//        myReceiptButton = v.findViewById(R.id.myReceipts_receipt);
+        mshowMapButton = v.findViewById(R.id.myReceipts_location);
+        mLatitudeTextView = v.findViewById(R.id.myReceipts_latitude);
+        mLongitudeTextView = v.findViewById(R.id.myReceipts_longitude);
+
         mTitleField.setText(mMyReceipts.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -201,7 +218,6 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
-        mShopNameField = v.findViewById(R.id.myReceipts_shopname);
         mShopNameField.setText(mMyReceipts.getShopName());
         mShopNameField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -221,7 +237,28 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
-        mCommentsField = v.findViewById(R.id.myReceipts_comments);
+        if (!gpsStatus) mshowMapButton.setEnabled(false);
+        mshowMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float[] coords = getLocationCords();
+                if (mMyReceipts.getLocation() == null) {
+                    Toast.makeText(getContext(), "The receipt doesn't have specified coordinates",
+                            Toast.LENGTH_SHORT).show();
+                    mshowMapButton.setEnabled(false);
+
+                } else if (coords.length == 2) {
+                    LatLng latLng = new LatLng(coords[0], coords[1]);
+                    Intent intent = MapActivity.newIntent(getActivity(), latLng);
+
+                    startActivity(intent);
+
+                }
+
+
+            }
+        });
+
         mCommentsField.setText(mMyReceipts.getComments());
         mCommentsField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -241,9 +278,6 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
-        // Setup date button
-        mDateButton = v.findViewById(R.id.myReceipts_date);
-
         String formatDate = DateFormat.format("EEEE, MMM dd, yyyy", mMyReceipts.getDate()).toString();
         mDateButton.setText(formatDate);
 
@@ -258,7 +292,7 @@ public class MyReceiptsFragment extends Fragment {
         });
 
         // Setup checkbox
-        mReceiptSentCheckBox = v.findViewById(R.id.myReceipts_sent);
+
         mReceiptSentCheckBox.setChecked(mMyReceipts.isReceiptSent());
         mReceiptSentCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -268,8 +302,8 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
-        mReportButton = v.findViewById(R.id.myReceipts_report);
         mDateButton.setEnabled(true);
+
         mReportButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -282,59 +316,19 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
-        final Intent pickReceipt = new Intent(Intent.ACTION_PICK,
-                ContactsContract.Contacts.CONTENT_URI);
-        myReceiptButton = v.findViewById(R.id.myReceipts_receipt);
-        myReceiptButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(pickReceipt, REQUEST_CONTACT);
-            }
-        });
-
-        if (mMyReceipts.getRecepit() != null) {
-            myReceiptButton.setText(mMyReceipts.getRecepit());
-        }
-
-        PackageManager packageManager = Objects.requireNonNull(getActivity()).getPackageManager();
-        if (packageManager.resolveActivity(pickReceipt, PackageManager.MATCH_DEFAULT_ONLY) == null) {
-            myReceiptButton.setEnabled(false);
-        }
-
-
-        mLocationButton = v.findViewById(R.id.myReceipts_location);
-        mLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create a URI from an intent string. Use the result to create an Intent.
-                String uriBegin = "geo:" + mMyReceipts.getLatitude() + "," + mMyReceipts.getLongitude();
-                String query = mMyReceipts.getLatitude() + mMyReceipts.getLongitude();
-                String encodedQuery = Uri.encode(query);
-                String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
-                Uri uri = Uri.parse(uriString);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-
-                Log.d(TAG, "Latitude stored in database: " + mMyReceipts.getLatitude());
-                Log.d(TAG, "Longitude stored in database: " + mMyReceipts.getLongitude());
-                LongCoord = v.findViewById(R.id.myReceipts_longitude);
-                LatCoord = v.findViewById(R.id.myReceipts_latitude);
-                startActivity(intent);
-            }
-        });
-
-        // Setup photo taking functions
+       // Photos
         mPhotoView = v.findViewById(R.id.myReceipts_photo);
-        mPhotoButton = v.findViewById(R.id.myReceipts_camera); //
 
+        PackageManager packageManager = getActivity().getPackageManager();
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(packageManager) != null;
         mPhotoButton.setEnabled(canTakePhoto);
 
         // / If a camera is not available, disable the camera functionality
-        if (canTakePhoto) {
-            Uri uri = Uri.fromFile(mPhotoFile);
-            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        }
+//        if (canTakePhoto) {
+//            Uri uri = Uri.fromFile(mPhotoFile);
+//            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+//        }
 
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
 
@@ -345,10 +339,13 @@ public class MyReceiptsFragment extends Fragment {
                         mPhotoFile);
                 captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 
-                List <ResolveInfo> cameraActivities = getActivity().getPackageManager().queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
+                List <ResolveInfo> cameraActivities = getActivity()
+                        .getPackageManager()
+                        .queryIntentActivities(captureImage,
+                                PackageManager.MATCH_DEFAULT_ONLY);
 
                 for (ResolveInfo activity : cameraActivities) {
-                    getActivity().grantUriPermission(activity.activityInfo.packageName,
+                    getActivity().grantUriPermission(activity.activityInfo.toString(),
                             uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
                 startActivityForResult(captureImage, REQUEST_PHOTO);
@@ -361,7 +358,7 @@ public class MyReceiptsFragment extends Fragment {
             public void onClick(View view) {
                 FragmentManager fm = getFragmentManager();
                 ImageDisplayFragment ImageFragment = ImageDisplayFragment.newInstance(mPhotoFile);
-                assert fm != null;
+
                 ImageFragment.show(fm, DIALOG_IMAGE);
             }
         });
@@ -385,10 +382,9 @@ public class MyReceiptsFragment extends Fragment {
     private String getReceiptReport() {
 
         String dateFormat = "EEE, MMM dd, yyyy";
-        String dateString = DateFormat.format(dateFormat, mMyReceipts.getDate()).toString();
-        String shopNameString = getString(R.string.myReceipts_report_shopname) + mMyReceipts.getShopName();
-        String commentsString = getString(R.string.myReceipts_report_comments) + mMyReceipts.getComments();
-
+        String dateString = DateFormat.format(dateFormat,mMyReceipts.getDate()).toString();
+        String shopNameString = getString(R.string.myReceipts_report_shopname) +  mMyReceipts.getShopName();
+        String commentsString = getString(R.string.myReceipts_report_comments ) +  mMyReceipts.getComments();
 
         /// Return the report
         return getString(R.string.receipt_report,
@@ -410,7 +406,7 @@ public class MyReceiptsFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
+        if (resultCode != RESULT_OK) {
             return;
         }
 
@@ -447,16 +443,36 @@ public class MyReceiptsFragment extends Fragment {
             // Remove temporary write access to file from camera
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-            mPhotoView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Announce to screenreader
-                    mPhotoView.announceForAccessibility(getString(R.string.photo_announcement));
-                }
-            }, 500);
-
             updateMyReceipts();
             updatePhotoView();
+            updateLocationView();
+        }
+
+    }
+
+    private void updateLocationView() {
+        if (mMyReceipts.getLocation() != null) {
+            String[] shopLocation = mMyReceipts.getLocation().split(",");
+            float longitude = Float.parseFloat(shopLocation[0].trim());
+            float latitude = Float.parseFloat(shopLocation[1].trim());
+
+            mLongitudeTextView.setText("     Long: " + String.format("%.3f", longitude));
+            mLatitudeTextView.setText("    Lat: " + String.format("%.3f", latitude));
+        }
+    }
+
+    private float[] getLocationCords() {
+        String[] shopLocation = mMyReceipts.getLocation().split(",");
+        float longitude = Float.parseFloat(shopLocation[0].trim());
+        float latitude = Float.parseFloat(shopLocation[1].trim());
+
+        return new float[]{longitude, latitude};
+    }
+
+    public void finishFragment() {
+
+        if (NavUtils.getParentActivityName(getActivity()) != null) {
+            NavUtils.navigateUpFromSameTask(getActivity());
         }
     }
 
@@ -474,6 +490,7 @@ public class MyReceiptsFragment extends Fragment {
         mCallbacks.onMyReceiptsUpdated(mMyReceipts);
 
         Toast.makeText(getActivity(), R.string.toast_delete_myReceipts, Toast.LENGTH_SHORT).show();
+        finishFragment();
     }
 
     @Override
@@ -501,6 +518,29 @@ public class MyReceiptsFragment extends Fragment {
     private void updateMyReceipts() {
         MyReceiptsObjects.get(getActivity()).updateMyReceipts(mMyReceipts);
         mCallbacks.onMyReceiptsUpdated(mMyReceipts);
+    }
+
+    //google map connectivity methods
+    public boolean isServicesOk() {
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getActivity());
+
+        if (available == ConnectionResult.SUCCESS) {
+            return true;
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(context, "Cant make map request", Toast.LENGTH_LONG).show();
+        }
+        return false;
+
+    }
+
+    private boolean checkGpsStatus() {
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
     }
 
 }

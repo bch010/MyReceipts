@@ -41,6 +41,12 @@
             android:parentActivityName=".MyReceiptsListActivity">
         </activity>
 
+        <activity android:name=".MapActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDfRRLQ_AC1SEwYo-Qv6Exg_RFOrMyQbIs" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="au.edu.usc.myreceipts.android.myreceipts.fileprovider"
@@ -50,8 +56,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/files"/>
         </provider>
-
-
 
     </application>
 

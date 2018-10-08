@@ -134,8 +134,10 @@ public class MyReceiptsObjects {
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS, myReceipts.getComments());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPTSENT, myReceipts.isReceiptSent() ? 1 : 0);
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT, myReceipts.getRecepit());
-        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.LONGITUDE, myReceipts.getLongitude());
-        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.LATITUDE, myReceipts.getLatitude());
+        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.LOCATION, myReceipts.getLocation());
+
+//        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.LONGITUDE, myReceipts.getLongitude());
+//        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.LATITUDE, myReceipts.getLatitude());
 
         return values;
     }

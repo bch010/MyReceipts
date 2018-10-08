@@ -27,6 +27,7 @@ public class MyReceiptsListFragment extends Fragment {
     private static final String TAG = "MyReceiptsListFragment";
     private static final String SAVE_SUBTITLE_VISIBLE = "subtitle";
 
+    //view
     private RecyclerView mReceiptsRecyclerView;
     private MyReceiptsAdapter mAdapter;
     private boolean mSubtitleVisible;

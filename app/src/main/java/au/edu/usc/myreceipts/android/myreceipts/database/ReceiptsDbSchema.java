@@ -15,8 +15,9 @@ public class ReceiptsDbSchema {
             public static final String COMMENTS = "comments";
             public static final String RECEIPTSENT = "receiptsent";
             public static final String RECEIPT = "receipt";
-            public static final String LATITUDE = "latitude";
-            public static final String LONGITUDE = "longitude";
+            public static final String LOCATION ="location";
+//            public static final String LATITUDE = "latitude";
+//            public static final String LONGITUDE = "longitude";
         }
     }
 }
