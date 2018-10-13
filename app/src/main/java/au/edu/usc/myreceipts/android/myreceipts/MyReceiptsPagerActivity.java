@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +34,7 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
 
     private ViewPager mViewPager;
-    private List<MyReceipts> mMyReceipts;
+    private List <MyReceipts> mMyReceipts;
     private static Context context;
     private LocationManager locationManager;
     private boolean gpsStatus = false;
@@ -53,11 +51,10 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
         getLocationPermission();
 
 
-        if(mLocationPermissionGranted ==false){
+        if (mLocationPermissionGranted == false) {
             finish();
-        }
-        else if(!gpsStatus){
-            Toast.makeText(getApplicationContext(),"Turn on your GPS first",Toast.LENGTH_LONG).show();
+        } else if (!gpsStatus) {
+            Toast.makeText(getApplicationContext(), "Turn on your GPS first", Toast.LENGTH_LONG).show();
             finish();
         }
 
@@ -97,53 +94,51 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
     }
 
     //google map connectivity methods
-    public boolean isServicesOk(){
+    public boolean isServicesOk() {
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MyReceiptsPagerActivity.this);
 
-        if(available == ConnectionResult.SUCCESS){
+        if (available == ConnectionResult.SUCCESS) {
             return true;
-        }
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MyReceiptsPagerActivity.this,available,ERROR_DIALOG_REQUEST);
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MyReceiptsPagerActivity.this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
-        }
-        else{
-            Toast.makeText(this,"Cant make map request",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Cant make map request", Toast.LENGTH_LONG).show();
         }
         return false;
 
     }
 
-    private boolean checkGpsStatus(){
+    private boolean checkGpsStatus() {
         context = getApplicationContext();
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     //get map permissions
-    private void getLocationPermission(){
+    private void getLocationPermission() {
         String[] permissions = {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION};
 
-        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
                 //initMap();
-            }else {
-                ActivityCompat.requestPermissions((Activity) context,permissions,LOCATION_PERMISSION_REQUEST_CODE);
+            } else {
+                ActivityCompat.requestPermissions((Activity) context, permissions, LOCATION_PERMISSION_REQUEST_CODE);
             }
-        }
-        else ActivityCompat.requestPermissions( this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
+        } else
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
 
-        switch (requestCode){
-            case LOCATION_PERMISSION_REQUEST_CODE:{
-                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    for(int i=0; i< grantResults.length ; i++){
-                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionGranted = false;
                             return;
                         }

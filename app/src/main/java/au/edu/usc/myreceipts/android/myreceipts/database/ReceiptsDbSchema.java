@@ -6,8 +6,8 @@ public class ReceiptsDbSchema {
 
         public static final String NAME = "receipts";
 
-            // database schema
-            public static final class Cols {
+        // database schema
+        public static final class Cols {
             public static final String UUID = "uuid";
             public static final String TITLE = "title";
             public static final String DATE = "date";
@@ -15,7 +15,7 @@ public class ReceiptsDbSchema {
             public static final String COMMENTS = "comments";
             public static final String RECEIPTSENT = "receiptsent";
             public static final String RECEIPT = "receipt";
-            public static final String LOCATION ="location";
+            public static final String LOCATION = "location";
         }
     }
 }

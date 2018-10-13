@@ -12,7 +12,6 @@ public class ReceiptsBaseHelper extends SQLiteOpenHelper {
 
     public ReceiptsBaseHelper(Context context) {
 
-
         super(context, DATABASE_NAME, null, VERSION);
     }
 

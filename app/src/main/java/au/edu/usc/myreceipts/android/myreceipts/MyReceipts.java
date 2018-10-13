@@ -1,7 +1,6 @@
 package au.edu.usc.myreceipts.android.myreceipts;
 
 
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -73,7 +72,6 @@ public class MyReceipts {
         mReceiptSent = receiptsent;
     }
 
-
     public String getRecepit() {
 
         return mReceipt;
@@ -81,7 +79,7 @@ public class MyReceipts {
 
     public void setReceipt(String receipt) {
 
-    mReceipt = receipt;
+        mReceipt = receipt;
     }
 
     public String getComments() {

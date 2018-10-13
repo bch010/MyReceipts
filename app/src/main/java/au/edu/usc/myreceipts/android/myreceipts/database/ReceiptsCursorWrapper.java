@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 
 
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,7 +25,7 @@ public class ReceiptsCursorWrapper extends CursorWrapper {
         String comments = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS));
         int isReceiptSent = getInt(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPTSENT));
         String receipt = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT));
-        String location= getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.LOCATION));
+        String location = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.LOCATION));
 
         MyReceipts myReceipts = new MyReceipts(UUID.fromString(uuidString));
         myReceipts.setTitle(title);
@@ -36,8 +35,6 @@ public class ReceiptsCursorWrapper extends CursorWrapper {
         myReceipts.setReceiptSent(isReceiptSent != 0);
         myReceipts.setReceipt(receipt);
         myReceipts.setLocation(location);
-//        myReceipts.setLongitude(longitude);
-//        myReceipts.setLatitude(latitude);
         return myReceipts;
     }
 

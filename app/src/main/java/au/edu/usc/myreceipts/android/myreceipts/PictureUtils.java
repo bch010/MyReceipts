@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
 
-
 public class PictureUtils {
 
     // Reads in and resizes image that are too big to fit supplied height and width

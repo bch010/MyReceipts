@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import java.io.File;
 
-
 public class ImageDisplayFragment extends DialogFragment {
     private static final String ARG_FILE = "fileName";
     private File mPhotoFile;
@@ -37,7 +36,7 @@ public class ImageDisplayFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LinearLayout layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.dialog_image, null);
-        mPhotoView =  layout.findViewById(R.id.image_view);
+        mPhotoView = layout.findViewById(R.id.image_view);
         if (mPhotoFile == null || !mPhotoFile.exists()) {
             mPhotoView.setImageDrawable(null);
         } else {

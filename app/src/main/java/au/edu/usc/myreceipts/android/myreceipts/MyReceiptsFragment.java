@@ -53,7 +53,6 @@ import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
-
 public class MyReceiptsFragment extends Fragment {
 
     private static final String ARG_MYRECEIPTS_ID = "myReceipts_id";
@@ -180,8 +179,6 @@ public class MyReceiptsFragment extends Fragment {
         mShowMapButton = v.findViewById(R.id.myReceipts_location);
         mLatitudeTextView = v.findViewById(R.id.myReceipts_latitude);
         mLongitudeTextView = v.findViewById(R.id.myReceipts_longitude);
-
-
 
         // Photos
         PackageManager packageManager = getActivity().getPackageManager();

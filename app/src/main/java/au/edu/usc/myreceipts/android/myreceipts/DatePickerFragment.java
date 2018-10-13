@@ -22,11 +22,11 @@ public class DatePickerFragment extends DialogFragment {
     private static final String ARG_DATE = "date";
     private DatePicker mDatePicker;
 
-    public Dialog onCreateDialog(Bundle savedInstanceSate){
+    public Dialog onCreateDialog(Bundle savedInstanceSate) {
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date,null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
 
-        Date date =(Date)getArguments().getSerializable(ARG_DATE);
+        Date date = (Date) getArguments().getSerializable(ARG_DATE);
         mDatePicker = view.findViewById(R.id.dialog_date_date_picker);
 
         Calendar calendar = Calendar.getInstance();
@@ -36,9 +36,9 @@ public class DatePickerFragment extends DialogFragment {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        mDatePicker.init(year,month,day,null);
+        mDatePicker.init(year, month, day, null);
 
-        AlertDialog.Builder dialog =new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setView(view);
         dialog.setTitle(R.string.dialog_date_title);
         dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -48,30 +48,30 @@ public class DatePickerFragment extends DialogFragment {
                 int month = mDatePicker.getMonth();
                 int day = mDatePicker.getDayOfMonth();
 
-                Date date = new GregorianCalendar(year,month,day).getTime();
-                sendResult(Activity.RESULT_OK,date);
+                Date date = new GregorianCalendar(year, month, day).getTime();
+                sendResult(Activity.RESULT_OK, date);
             }
         });
 
         return dialog.create();
     }
 
-    public static DatePickerFragment newInstance(Date date){
+    public static DatePickerFragment newInstance(Date date) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_DATE,date);
+        args.putSerializable(ARG_DATE, date);
 
-        DatePickerFragment fragment =new DatePickerFragment();
+        DatePickerFragment fragment = new DatePickerFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void sendResult(int resultCode, Date date){
-        if(getTargetFragment()==null){
+    private void sendResult(int resultCode, Date date) {
+        if (getTargetFragment() == null) {
             return;
         }
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_DATE,date);
+        intent.putExtra(EXTRA_DATE, date);
 
-        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode,intent);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 }
