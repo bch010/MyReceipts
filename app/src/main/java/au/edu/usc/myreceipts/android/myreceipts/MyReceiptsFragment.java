@@ -60,13 +60,12 @@ public class MyReceiptsFragment extends Fragment {
 
     // Dialog tags
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_IMAGE = "DialogImage";
+    private static final int ERROR_DIALOG_REQUEST = 1001;
 
     // request codes
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
-    private static final String DIALOG_IMAGE = "DialogImage";
-    private static final String TAG = "MyReceiptsFragment";
-    private static final int ERROR_DIALOG_REQUEST =  1001;
 
     // Widgets
     private MyReceipts mMyReceipts;
@@ -79,7 +78,6 @@ public class MyReceiptsFragment extends Fragment {
     private Button mReportButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
-//    private Button myReceiptButton;
     private File mPhotoFile;
     private ViewTreeObserver mPhotoTreeObserver;
     private Point mPhotoViewSize;
@@ -120,7 +118,7 @@ public class MyReceiptsFragment extends Fragment {
         mPhotoFile = MyReceiptsObjects.get(getActivity()).getPhotoFile(mMyReceipts);
 
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        boolean gpsServiceAvailable = isServicesOk();
+        gpsServiceAvailable = isServicesOk();
         gpsStatus = checkGpsStatus();
 
         if (gpsServiceAvailable) {
@@ -135,7 +133,7 @@ public class MyReceiptsFragment extends Fragment {
 
                     return;
                 }
-                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener <Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
@@ -146,7 +144,7 @@ public class MyReceiptsFragment extends Fragment {
                                 mMyReceipts.setLocation(currentLocation);
                                 MyReceiptsObjects.get(getActivity()).updateMyReceipts(mMyReceipts);
                                 updateLocationView();
-                                // Toast.makeText(getContext(),"onSuccess "+currentLocation,Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getContext(),"onSuccess "+currentLocation,Toast.LENGTH_SHORT).show();
                             } else {
 
                                 updateLocationView();
@@ -161,19 +159,6 @@ public class MyReceiptsFragment extends Fragment {
                 Toast.makeText(getActivity(), "Enable Location on your device", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        MyReceiptsObjects.get(getActivity()).updateMyReceipts(mMyReceipts);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = null;
     }
 
     @Nullable
@@ -195,6 +180,49 @@ public class MyReceiptsFragment extends Fragment {
         mShowMapButton = v.findViewById(R.id.myReceipts_location);
         mLatitudeTextView = v.findViewById(R.id.myReceipts_latitude);
         mLongitudeTextView = v.findViewById(R.id.myReceipts_longitude);
+
+
+
+        // Photos
+        PackageManager packageManager = getActivity().getPackageManager();
+        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(packageManager) != null;
+        mPhotoButton.setEnabled(canTakePhoto);
+
+        // / If a camera is not available, disable the camera functionality
+//        if (canTakePhoto) {
+//            Uri uri = Uri.fromFile(mPhotoFile);
+//            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+//        }
+
+        mPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = FileProvider.getUriForFile(getActivity(), "au.edu.usc.myreceipts.android.myreceipts.fileprovider", mPhotoFile);
+                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+                List <ResolveInfo> cameraActivities = getActivity()
+                        .getPackageManager()
+                        .queryIntentActivities(captureImage,
+                                PackageManager.MATCH_DEFAULT_ONLY);
+
+                for (ResolveInfo activity : cameraActivities) {
+                    getActivity().grantUriPermission(activity.activityInfo.packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
+                startActivityForResult(captureImage, REQUEST_PHOTO);
+            }
+        });
+
+        // On image click, open zoomed image dialog
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getFragmentManager();
+                ImageDisplayFragment ImageFragment = ImageDisplayFragment.newInstance(mPhotoFile);
+
+                ImageFragment.show(fm, DIALOG_IMAGE);
+            }
+        });
 
         mTitleField.setText(mMyReceipts.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
@@ -309,52 +337,6 @@ public class MyReceiptsFragment extends Fragment {
             }
         });
 
-       // Photos
-
-        PackageManager packageManager = getActivity().getPackageManager();
-        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        boolean canTakePhoto = mPhotoFile != null
-                && captureImage.resolveActivity(packageManager) != null;
-        mPhotoButton.setEnabled(canTakePhoto);
-
-        // / If a camera is not available, disable the camera functionality
-//        if (canTakePhoto) {
-//            Uri uri = Uri.fromFile(mPhotoFile);
-//            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-//        }
-
-        mPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = FileProvider.getUriForFile(getActivity(),
-                        "au.edu.usc.myreceipts.android.myreceipts.fileprovider",
-                        mPhotoFile);
-                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-
-                List <ResolveInfo> cameraActivities = getActivity()
-                        .getPackageManager()
-                        .queryIntentActivities(captureImage,
-                                PackageManager.MATCH_DEFAULT_ONLY);
-
-                for (ResolveInfo activity : cameraActivities) {
-                    getActivity().grantUriPermission(activity.activityInfo.toString(),
-                            uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                }
-                startActivityForResult(captureImage, REQUEST_PHOTO);
-            }
-        });
-
-        // On image click, open zoomed image dialog
-        mPhotoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = getFragmentManager();
-                ImageDisplayFragment ImageFragment = ImageDisplayFragment.newInstance(mPhotoFile);
-
-                ImageFragment.show(fm, DIALOG_IMAGE);
-            }
-        });
-
         mPhotoTreeObserver = mPhotoView.getViewTreeObserver();
         mPhotoTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -374,9 +356,9 @@ public class MyReceiptsFragment extends Fragment {
     private String getReceiptReport() {
 
         String dateFormat = "EEE, MMM dd, yyyy";
-        String dateString = DateFormat.format(dateFormat,mMyReceipts.getDate()).toString();
-        String shopNameString = getString(R.string.myReceipts_report_shopname) +  mMyReceipts.getShopName();
-        String commentsString = getString(R.string.myReceipts_report_comments ) +  mMyReceipts.getComments();
+        String dateString = DateFormat.format(dateFormat, mMyReceipts.getDate()).toString();
+        String shopNameString = getString(R.string.myReceipts_report_shopname) + mMyReceipts.getShopName();
+        String commentsString = getString(R.string.myReceipts_report_comments) + mMyReceipts.getComments();
 
         /// Return the report
         return getString(R.string.receipt_report,
@@ -409,15 +391,29 @@ public class MyReceiptsFragment extends Fragment {
 
             updateMyReceipts();
 
-        }else if (requestCode == REQUEST_PHOTO) {
-            Uri uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", mPhotoFile);
+        } else if (requestCode == REQUEST_PHOTO) {
+            Uri uri = FileProvider.getUriForFile(getActivity(),
+                    "au.edu.usc.myreceipts.android.myreceipts.fileprovider", mPhotoFile);
             // Remove temporary write access to file from camera
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-            updateMyReceipts();
             updatePhotoView();
+            updateMyReceipts();
             updateLocationView();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        MyReceiptsObjects.get(getActivity()).updateMyReceipts(mMyReceipts);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 
     private void updateLocationView() {
@@ -510,7 +506,5 @@ public class MyReceiptsFragment extends Fragment {
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
     }
-
 }

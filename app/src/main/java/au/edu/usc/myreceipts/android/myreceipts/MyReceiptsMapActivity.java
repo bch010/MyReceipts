@@ -60,7 +60,7 @@ public class MyReceiptsMapActivity extends AppCompatActivity implements OnMapRea
         moveCamera(latLng);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
         googleMap.addMarker(new MarkerOptions()
-        .position(latLng));
+                .position(latLng));
 
 
     }

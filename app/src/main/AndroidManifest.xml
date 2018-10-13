@@ -2,14 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="au.edu.usc.myreceipts.android.myreceipts">
 
-    <uses-feature android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
     <application
@@ -19,13 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".MyReceiptsActivity">
+        </activity>
+
         <activity android:name=".MyReceiptsListActivity">
 
             <intent-filter>
 
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
 
@@ -33,15 +41,11 @@
 
         <activity
             android:name=".MyReceiptsPagerActivity"
-            android:parentActivityName=".MyReceiptsListActivity">
-        </activity>
+            android:parentActivityName=".MyReceiptsListActivity"></activity>
 
         <activity
             android:name=".MyReceiptsWebViewActivity"
-            android:parentActivityName=".MyReceiptsListActivity">
-        </activity>
-
-        <activity android:name=".MyReceiptsMapActivity" />
+            android:parentActivityName=".MyReceiptsListActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -54,8 +58,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/files"/>
+                android:resource="@xml/files" />
         </provider>
+
+        <activity android:name=".MyReceiptsMapActivity"></activity>
 
     </application>
 

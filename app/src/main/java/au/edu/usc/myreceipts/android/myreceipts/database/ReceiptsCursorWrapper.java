@@ -27,8 +27,6 @@ public class ReceiptsCursorWrapper extends CursorWrapper {
         int isReceiptSent = getInt(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPTSENT));
         String receipt = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT));
         String location= getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.LOCATION));
-//        String longitude = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.LONGITUDE));
-//        String latitude = getString(getColumnIndex(ReceiptsDbSchema.ReceiptsTable.Cols.LATITUDE));
 
         MyReceipts myReceipts = new MyReceipts(UUID.fromString(uuidString));
         myReceipts.setTitle(title);
