@@ -14,7 +14,6 @@ public class ReceiptsDbSchema {
             public static final String SHOPNAME = "shopname";
             public static final String COMMENTS = "comments";
             public static final String RECEIPTSENT = "receiptsent";
-            public static final String RECEIPT = "receipt";
             public static final String LOCATION = "location";
         }
     }

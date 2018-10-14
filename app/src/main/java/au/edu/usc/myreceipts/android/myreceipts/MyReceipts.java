@@ -11,7 +11,6 @@ public class MyReceipts {
     private Date mDate;
     private String mShopName;
     private boolean mReceiptSent;
-    private String mReceipt;
     private String mComments;
     private String mLocation;
 
@@ -70,16 +69,6 @@ public class MyReceipts {
     public void setReceiptSent(boolean receiptsent) {
 
         mReceiptSent = receiptsent;
-    }
-
-    public String getRecepit() {
-
-        return mReceipt;
-    }
-
-    public void setReceipt(String receipt) {
-
-        mReceipt = receipt;
     }
 
     public String getComments() {

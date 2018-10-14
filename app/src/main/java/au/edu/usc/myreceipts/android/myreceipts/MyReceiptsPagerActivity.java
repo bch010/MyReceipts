@@ -58,7 +58,6 @@ public class MyReceiptsPagerActivity extends AppCompatActivity
             finish();
         }
 
-
         UUID receiptId = (UUID) getIntent().getSerializableExtra(EXTRA_MYRECEIPT_ID);
 
         mViewPager = findViewById(R.id.activity_myreceipts_pager_view_pager);

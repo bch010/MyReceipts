@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.UUID;
 import au.edu.usc.myreceipts.android.myreceipts.database.ReceiptsBaseHelper;
 import au.edu.usc.myreceipts.android.myreceipts.database.ReceiptsCursorWrapper;
 import au.edu.usc.myreceipts.android.myreceipts.database.ReceiptsDbSchema;
-
 
 /**
  * Stores data as a singleton while application is in memory. Will be destroyed after
@@ -133,11 +131,9 @@ public class MyReceiptsObjects {
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.SHOPNAME, myReceipts.getShopName());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.COMMENTS, myReceipts.getComments());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPTSENT, myReceipts.isReceiptSent() ? 1 : 0);
-        values.put(ReceiptsDbSchema.ReceiptsTable.Cols.RECEIPT, myReceipts.getRecepit());
         values.put(ReceiptsDbSchema.ReceiptsTable.Cols.LOCATION, myReceipts.getLocation());
         return values;
     }
-
 
     /**
      * Private constructor prevents more than one instance

@@ -36,9 +36,5 @@
             android:layout_centerInParent="true"
             android:text="@string/empty_view_add_button"/>
 
-
-
-        
-
     </RelativeLayout>
 </RelativeLayout>
