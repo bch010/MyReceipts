@@ -149,7 +149,7 @@ public class MyReceiptsFragment extends Fragment {
                                 updateLocationView();
                             }
                         } else
-                            Toast.makeText(getContext(), "Location is null", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Could not retrieve location, check location permission is on", Toast.LENGTH_LONG).show();
                     }
 
                 });
@@ -326,7 +326,8 @@ public class MyReceiptsFragment extends Fragment {
             public void onClick(View v) {
 
                 ShareCompat.IntentBuilder.from(getActivity())
-                        .setType("text/plain")
+                        .setType("image/*")
+
                         .setText(getReceiptReport())
                         .setSubject(getString(R.string.myReceipts_report_subject))
                         .setChooserTitle(getString(R.string.send_report))
