@@ -26,12 +26,13 @@ public class MyReceiptsWebViewActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false;
+                return false; //enables activity to handle webView.loadUrl requests
+
             }
         });
 
         mProgressBar = findViewById(R.id.progressbar);
-        mProgressBar.setMax(100);
+        mProgressBar.setMax(100); // report progress range from 0-100
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView webview, int newProgress) {
                 if (newProgress == 100) {

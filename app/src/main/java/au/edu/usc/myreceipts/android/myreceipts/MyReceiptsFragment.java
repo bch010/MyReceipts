@@ -149,12 +149,12 @@ public class MyReceiptsFragment extends Fragment {
                                 updateLocationView();
                             }
                         } else
-                            Toast.makeText(getContext(), "Could not retrieve location, check location permission is on", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Could not retrieve location, are you in a cave?", Toast.LENGTH_LONG).show();
                     }
 
                 });
             } else {
-//                    mShowMapButton.setEnabled(false);
+                    mShowMapButton.setEnabled(false);
                 Toast.makeText(getActivity(), "Enable Location on your device", Toast.LENGTH_SHORT).show();
             }
         }

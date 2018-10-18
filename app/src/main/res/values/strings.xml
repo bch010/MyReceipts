@@ -24,9 +24,9 @@
     <string name="myReceipts_location_text">Show in map</string>
 
     <!-- MyReceipts Report -->
-    <string name="receipt_report">Receipts for: %1$s\n\nReceipt Date:  %2$s\n\n%3$s\n\n%4$s\n\n%5$s</string>
+    <string name="receipt_report">Receipts for: %1$s\n\nReceipt Date :  %2$s\n\n%3$s\n\n%4$s\n\n%5$s</string>
 
-    <string name="myReceipts_report_shopname"> Shope Name:  </string>
+    <string name="myReceipts_report_shopname"> Shop Name:  </string>
     <string name="myReceipts_report_comments">Comments: </string>
     <string name="myReceipts_report_receipt">the receipt is %s.</string>
     <string name="myReceipts_report_subject">Receipt Report</string>

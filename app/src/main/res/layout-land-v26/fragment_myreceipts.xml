@@ -2,21 +2,23 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"
             android:orientation="vertical">
 
             <ImageView
@@ -54,19 +56,69 @@
                 android:id="@+id/myReceipts_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/myReceipts_title_hint" />
+                android:hint="@string/myReceipts_title_hint"
+                android:inputType=""
+                android:autofillHints="" />
 
+            <LinearLayout
+                android:layout_width="197dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+
+                <TextView
+                    android:id="@+id/myReceipts_longitude"
+                    android:layout_width="58dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="30"
+                    android:gravity="left|center_horizontal"
+                    android:text="@string/myReceipts_longitude" />
+
+                <TextView
+                    android:id="@+id/myReceipts_latitude"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="30"
+                    android:gravity="right|center_horizontal"
+                    android:text="@string/myReceipts_latitude" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <Button
+                    android:id="@+id/myReceipts_location"
+                    android:layout_width="199dp"
+                    android:layout_height="37dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/myReceipts_location_text" />
+
+                <Button
+                    android:id="@+id/myReceipts_date"
+                    android:layout_width="199dp"
+                    android:layout_height="37dp"
+                    android:layout_weight="4"
+                    tools:text="@tools:sample/date/ddmmyy" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <EditText
         android:id="@+id/myReceipts_shopname"
+        android:layout_marginLeft="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/myReceipts_shopname_hint" />
 
     <EditText
         android:id="@+id/myReceipts_comments"
+        android:layout_marginLeft="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/myReceipts_comments_hint" />
@@ -78,12 +130,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/myReceipts_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4" />
 
     </LinearLayout>
 
@@ -102,36 +148,5 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/myReceipts_report_text" />
-
-    <Button
-        android:id="@+id/myReceipts_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/myReceipts_location_text" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="100">
-
-        <TextView
-            android:id="@+id/myReceipts_longitude"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="30"
-            android:gravity="right|center_horizontal"
-            android:text="@string/myReceipts_longitude" />
-
-        <TextView
-            android:id="@+id/myReceipts_latitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="30"
-            android:gravity="right|center_horizontal"
-            android:text="@string/myReceipts_latitude" />
-    </LinearLayout>
 
 </LinearLayout>
