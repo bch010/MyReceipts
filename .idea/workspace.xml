@@ -16,14 +16,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24da004d-95a8-4363-ab1b-ff6c51dea4e6" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout-land-v26/fragment_myreceipts.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout-land/fragment_myreceipts.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsWebViewActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsWebViewActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_myreceipts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_myreceipts.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/app/out/" />
@@ -63,82 +61,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MyReceiptsFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsFragment.java">
+      <file leaf-file-name="settings.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="157" column="20" selection-start-line="157" selection-start-column="20" selection-end-line="157" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4919#6055#0" expanded="true" />
-                <element signature="e#6054#6055#0" expanded="true" />
-                <element signature="e#7923#8775#0" expanded="true" />
-                <element signature="e#8774#8775#0" expanded="true" />
-                <element signature="e#8869#9201#0" expanded="true" />
-                <element signature="e#9200#9201#0" expanded="true" />
-                <element signature="e#10693#11401#0" expanded="true" />
-                <element signature="e#11400#11401#0" expanded="true" />
-                <element signature="e#12289#12700#0" expanded="true" />
-                <element signature="e#12699#12700#0" expanded="true" />
-                <element signature="e#12857#13129#0" expanded="true" />
-                <element signature="e#13128#13129#0" expanded="true" />
-                <element signature="e#13213#13666#0" expanded="true" />
-                <element signature="e#13481#13526#0" expanded="true" />
-                <element signature="e#13569#13600#0" expanded="true" />
-                <element signature="e#13665#13666#0" expanded="true" />
-                <element signature="e#13786#14172#0" expanded="true" />
-                <element signature="e#14171#14172#0" expanded="true" />
-                <element signature="e#14464#14510#0" expanded="true" />
-                <element signature="e#14572#14618#0" expanded="true" />
-                <element signature="e#14694#14844#0" expanded="true" />
-                <element signature="e#15084#15141#0" expanded="true" />
-                <element signature="e#15412#15466#0" expanded="true" />
-                <element signature="e#18107#18139#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_myreceipts.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_myreceipts.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
+      <file leaf-file-name="gradlew" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gradlew">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-289">
-              <caret line="79" column="41" selection-start-line="79" selection-start-column="41" selection-end-line="79" selection-end-column="41" />
+            <state relative-caret-position="510">
+              <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_myreceipts.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/fragment_myreceipts.xml">
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-              <folding>
-                <element signature="e#1058#1105#0" expanded="true" />
-                <element signature="e#1470#1515#0" expanded="true" />
-                <element signature="e#2017#2051#0" expanded="true" />
-                <element signature="e#2304#2335#0" expanded="true" />
-                <element signature="e#3921#3955#0" expanded="true" />
-                <element signature="e#4529#4563#0" expanded="true" />
-                <element signature="e#4779#4813#0" expanded="true" />
-                <element signature="e#5322#5350#0" expanded="true" />
-                <element signature="e#5604#5636#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <file leaf-file-name="gradle.properties" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gradle.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="29" column="54" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
+            <state>
+              <caret column="30" selection-start-column="30" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -2433,8 +2378,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/PictureUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/SingleFragmentActivity.java" />
-        <option value="$PROJECT_DIR$/gradlew.bat" />
-        <option value="$PROJECT_DIR$/gradlew" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/database/ReceiptsDbSchema.java" />
@@ -2444,7 +2387,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsObjects.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_myreceipts_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceipts.java" />
-        <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/webview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsWebViewActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-land-v26/fragment_myreceipts.xml" />
@@ -2452,6 +2394,10 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_myreceipts.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-land/fragment_myreceipts.xml" />
+        <option value="$PROJECT_DIR$/settings.gradle" />
+        <option value="$PROJECT_DIR$/gradlew.bat" />
+        <option value="$PROJECT_DIR$/gradlew" />
+        <option value="$PROJECT_DIR$/gradle.properties" />
       </list>
     </option>
   </component>
@@ -2520,33 +2466,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MyReceipts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MyReceipts" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="layout" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MyReceipts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MyReceipts" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="menu" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MyReceipts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MyReceipts" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="values" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -2735,7 +2654,14 @@
       <option name="project" value="LOCAL" />
       <updated>1539748124951</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add landscape mode and general formatting">
+      <created>1539902208179</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1539902208179</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2794,7 +2720,8 @@
     <MESSAGE value="formatting" />
     <MESSAGE value="general formatting and commenting" />
     <MESSAGE value="general formatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="general formatting" />
+    <MESSAGE value="add landscape mode and general formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="add landscape mode and general formatting" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsFragment.java">
@@ -2951,20 +2878,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gradlew.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradlew">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="36" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -3054,13 +2967,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
           <caret line="25" column="14" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -3223,6 +3129,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="54" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/fragment_myreceipts.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
+          <folding>
+            <element signature="e#1115#1162#0" expanded="true" />
+            <element signature="e#1527#1572#0" expanded="true" />
+            <element signature="e#2074#2108#0" expanded="true" />
+            <element signature="e#2361#2392#0" expanded="true" />
+            <element signature="e#3048#3078#0" expanded="true" />
+            <element signature="e#3576#3605#0" expanded="true" />
+            <element signature="e#4415#4449#0" expanded="true" />
+            <element signature="e#5023#5057#0" expanded="true" />
+            <element signature="e#5273#5307#0" expanded="true" />
+            <element signature="e#5816#5844#0" expanded="true" />
+            <element signature="e#6098#6130#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_myreceipts.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-289">
+          <caret line="79" column="41" selection-start-line="79" selection-start-column="41" selection-end-line="79" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="629">
@@ -3257,41 +3203,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_myreceipts.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/gradlew.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
-          <caret line="79" column="41" selection-start-line="79" selection-start-column="41" selection-end-line="79" selection-end-column="41" />
+        <state relative-caret-position="51">
+          <caret line="3" column="39" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="54" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/fragment_myreceipts.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
+    <entry file="file://$PROJECT_DIR$/gradlew">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
+        </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-          <folding>
-            <element signature="e#1058#1105#0" expanded="true" />
-            <element signature="e#1470#1515#0" expanded="true" />
-            <element signature="e#2017#2051#0" expanded="true" />
-            <element signature="e#2304#2335#0" expanded="true" />
-            <element signature="e#3921#3955#0" expanded="true" />
-            <element signature="e#4529#4563#0" expanded="true" />
-            <element signature="e#4779#4813#0" expanded="true" />
-            <element signature="e#5322#5350#0" expanded="true" />
-            <element signature="e#5604#5636#0" expanded="true" />
-          </folding>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="30" selection-start-column="30" selection-end-column="30" />
         </state>
       </provider>
     </entry>
