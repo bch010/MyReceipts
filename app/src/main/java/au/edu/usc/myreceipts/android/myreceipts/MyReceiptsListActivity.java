@@ -3,7 +3,6 @@ package au.edu.usc.myreceipts.android.myreceipts;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
-
 public class MyReceiptsListActivity extends SingleFragmentActivity
         implements MyReceiptsListFragment.Callbacks,
         MyReceiptsFragment.Callbacks {
