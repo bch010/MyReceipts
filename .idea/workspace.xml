@@ -16,7 +16,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24da004d-95a8-4363-ab1b-ff6c51dea4e6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/DatePickerFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/DatePickerFragment.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -57,7 +56,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MyReceiptsFragment.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MyReceiptsFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
@@ -71,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatePickerFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DatePickerFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/DatePickerFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
+            <state relative-caret-position="405">
+              <caret line="41" column="43" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
               <folding>
                 <element signature="e#1423#1449#0" expanded="true" />
               </folding>
@@ -2686,7 +2685,14 @@
       <option name="project" value="LOCAL" />
       <updated>1539902915160</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add code so time does not read 000 in the date button">
+      <created>1539905047954</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1539905047954</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2747,7 +2753,8 @@
     <MESSAGE value="general formatting" />
     <MESSAGE value="add landscape mode and general formatting" />
     <MESSAGE value="Initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <MESSAGE value="add code so time does not read 000 in the date button" />
+    <option name="LAST_COMMIT_MESSAGE" value="add code so time does not read 000 in the date button" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_myreceipts.xml">
@@ -3189,6 +3196,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/DatePickerFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="41" column="43" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
+          <folding>
+            <element signature="e#1423#1449#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/MyReceiptsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -3197,16 +3214,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#12287#12698#0" expanded="true" />
             <element signature="e#12697#12698#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/au/edu/usc/myreceipts/android/myreceipts/DatePickerFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
-          <folding>
-            <element signature="e#1423#1449#0" expanded="true" />
           </folding>
         </state>
       </provider>

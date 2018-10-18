@@ -39,7 +39,7 @@ public class DatePickerFragment extends DialogFragment {
         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minutes = calendar.get(Calendar.MINUTE);
 
-        mDatePicker.init(year, month, day, null);
+        mDatePicker.init(year, month, day,  null);
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setView(view);
