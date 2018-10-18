@@ -35,6 +35,9 @@ public class DatePickerFragment extends DialogFragment {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
+        // add so time does not read 000 in the date button
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int minutes = calendar.get(Calendar.MINUTE);
 
         mDatePicker.init(year, month, day, null);
 
@@ -48,7 +51,7 @@ public class DatePickerFragment extends DialogFragment {
                 int month = mDatePicker.getMonth();
                 int day = mDatePicker.getDayOfMonth();
 
-                Date date = new GregorianCalendar(year, month, day).getTime();
+                Date date = new GregorianCalendar(year, month, day, hour, minutes).getTime();
                 sendResult(Activity.RESULT_OK, date);
             }
         });
