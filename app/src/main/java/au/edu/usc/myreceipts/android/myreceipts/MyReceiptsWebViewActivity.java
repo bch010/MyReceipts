@@ -20,7 +20,7 @@ public class MyReceiptsWebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.webview);
+        setContentView(R.layout.activity_webview);
 
         webView = findViewById(R.id.myReceipts_webview);
         webView.setWebViewClient(new WebViewClient() {
@@ -43,8 +43,21 @@ public class MyReceiptsWebViewActivity extends AppCompatActivity {
                 }
             }
 
+            public void onReceivedTitle(WebView webView, String title) {
+                getSupportActionBar().setSubtitle(title);
+            }
+
         });
 
         webView.loadUrl("https://en.wikipedia.org/wiki/Receipt");
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

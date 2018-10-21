@@ -61,8 +61,6 @@ public class MyReceiptsMapActivity extends AppCompatActivity implements OnMapRea
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
         googleMap.addMarker(new MarkerOptions()
                 .position(latLng));
-
-
     }
 
     public static Intent newIntent(Context context, LatLng latLng) {
